@@ -1,13 +1,13 @@
 console.log("Hello! 🍎");
 
 // packages
-const express = require('express');
-const dotenv = require('dotenv');
+import express from 'express';
+import dotenv from 'dotenv';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 
 // utils
-const connectDB = require('./config/db');
+import connectDB from './config/db.js';
 
 dotenv.config();
 connectDB();
