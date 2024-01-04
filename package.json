@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "backend": "nodemon backend/server.js",
     "frontend": "npm run dev --prefix frontend",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "test": "nodemon backend/config/db.js"
   },
   "keywords": [],
   "author": "",
