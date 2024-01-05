@@ -147,7 +147,7 @@ const updateCurrentUserProfile = asyncHandler(async (req, res, next) => {
     } else {
         res.status(404);
         throw new Error('@updateCurrentUserProfile ERROR: User not found');
-    }
+    } 
 
 }, '@updateCurrentUserProfile ERROR: definition: ')
 
