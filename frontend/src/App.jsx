@@ -2,7 +2,9 @@ function App() {
 
   return (
     <>
-      <h1>React App</h1>
+      <h1 className="text-xl bold text-blue-700">
+        Hello world!
+      </h1>
     </>
   )
 }
