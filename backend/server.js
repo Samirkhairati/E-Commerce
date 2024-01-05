@@ -20,10 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/users', userRoutes);
 
-// app.get('/', (req, res) => {
-//     res.send('/ 🍎');
-// });
-
 app.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
 });
