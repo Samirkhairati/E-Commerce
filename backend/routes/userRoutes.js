@@ -7,6 +7,8 @@ import {
     getCurrentUserProfile,
     updateCurrentUserProfile,
     deleteUserById,
+    getUserById,
+    updateUserById
 } from '../controllers/userController.js';
 
 import { userAuth, adminAuth } from '../middleware/authMiddleware.js';
@@ -23,8 +25,11 @@ router.route('/logout').post(logoutUser)
 router.route('/profile')
     .get(userAuth, getCurrentUserProfile)
     .put(userAuth, updateCurrentUserProfile)
-    
-router.route('/:id').delete(userAuth, adminAuth, deleteUserById)
+
+router.route('/:id')
+    .delete(userAuth, adminAuth, deleteUserById)
+    .get(userAuth, adminAuth, getUserById)
+    .put(userAuth, adminAuth, updateUserById)
 
 
 

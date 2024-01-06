@@ -17,7 +17,7 @@ const createUser = asyncHandler(async (req, res, next) => {
     // check if registered
     const userExists = await User.findOne({ email });
     if (userExists) {
-        res.status(400).send('User already exists');
+        res.status(400)
         throw new Error('@createUser ERROR: User already exists');
     }
 
@@ -93,7 +93,7 @@ const logoutUser = asyncHandler(async (req, res, next) => {
         expires: new Date(0),
     });
 
-    res.status(200).json({message: 'User logged out',});
+    res.status(200).json({ message: 'User logged out', });
 
     next();
 
@@ -109,7 +109,7 @@ const getAllUsers = asyncHandler(async (req, res, next) => {
 
 const getCurrentUserProfile = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user._id);
-    
+
     if (user) {
         res.status(200).json({
             _id: user._id,
@@ -124,7 +124,7 @@ const getCurrentUserProfile = asyncHandler(async (req, res, next) => {
 
 const updateCurrentUserProfile = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user._id);
-    
+
     if (user) {
 
         user.username = req.body.username || user.username;
@@ -143,21 +143,21 @@ const updateCurrentUserProfile = asyncHandler(async (req, res, next) => {
             email: updatedUser.email,
             isAdmin: updatedUser.isAdmin,
         });
-         next()
+        next()
     } else {
         res.status(404);
         throw new Error('@updateCurrentUserProfile ERROR: User not found');
-    } 
+    }
 
 }, '@updateCurrentUserProfile ERROR: definition: ')
 
 const deleteUserById = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.params.id);
-    
+
     if (user) {
         if (!user.isAdmin) {
-            await User.deleteOne({ _id: req.params.id});
-            res.status(200).json({message: 'User removed'});
+            await User.deleteOne({ _id: req.params.id });
+            res.status(200).json({ message: 'User removed' });
             next();
         } else {
             res.status(400);
@@ -170,12 +170,49 @@ const deleteUserById = asyncHandler(async (req, res, next) => {
 
 }, '@deleteUserById ERROR: definition: ')
 
-export { 
-    createUser, 
-    loginUser, 
-    logoutUser, 
-    getAllUsers, 
+const getUserById = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.params.id).select('-password');
+
+    if (user) {
+        res.status(200).json(user);
+    } else {
+        res.status(404);
+        throw new Error('@getUserById ERROR: User not found');
+    }
+
+}, '@getUserById ERROR: definition: ')
+
+const updateUserById = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+        user.username = req.body.username || user.username;
+        user.email = req.body.email || user.email;
+        user.isAdmin = req.body.isAdmin || user.isAdmin;
+
+        const updatedUser = await user.save();
+
+        res.status(200).json({
+            _id: updatedUser._id,
+            username: updatedUser.username,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+        });
+        next()
+    } else {
+        res.status(404);
+        throw new Error('@updateUserById ERROR: User not found');
+    }
+
+}, '@updateUserById ERROR: definition: ')
+
+export {
+    createUser,
+    loginUser,
+    logoutUser,
+    getAllUsers,
     getCurrentUserProfile,
     updateCurrentUserProfile,
     deleteUserById,
+    getUserById,
+    updateUserById,
 };
