@@ -32,5 +32,4 @@ router.route('/:id')
     .put(userAuth, adminAuth, updateUserById)
 
 
-
 export default router;
