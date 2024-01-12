@@ -1,7 +1,8 @@
 import { Outlet } from 'react-router-dom'
-import Navigation from '../pages/auth/Navigation'
+import Navigation from './pages/auth/Navigation'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import './app.css'
 
 function App() {
 
@@ -9,7 +10,7 @@ function App() {
     <>
       <ToastContainer />
       <Navigation />
-      <main className='py-3'>
+      <main className='py-33'>
         <Outlet />
       </main>
     </>
@@ -17,3 +18,6 @@ function App() {
 }
 
 export default App 
+
+
+
