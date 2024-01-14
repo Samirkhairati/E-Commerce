@@ -124,7 +124,6 @@ const getCurrentUserProfile = asyncHandler(async (req, res, next) => {
 
 const updateCurrentUserProfile = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user._id);
-
     if (user) {
 
         user.username = req.body.username || user.username;
@@ -133,7 +132,7 @@ const updateCurrentUserProfile = asyncHandler(async (req, res, next) => {
         if (req.body.password) {
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(req.body.password, salt);
-        }
+        } 
 
         const updatedUser = await user.save();
 
@@ -142,8 +141,8 @@ const updateCurrentUserProfile = asyncHandler(async (req, res, next) => {
             username: updatedUser.username,
             email: updatedUser.email,
             isAdmin: updatedUser.isAdmin,
-        });
-        next()
+        })
+        // next()
     } else {
         res.status(404);
         throw new Error('@updateCurrentUserProfile ERROR: User not found');

@@ -4,7 +4,7 @@ const asyncHandler = (givenFunction, customError) => {
             await givenFunction(req, res, next);
         } catch (error) {
             if (customError === undefined) {
-                res.send(error.message)
+                //res.send(error.message)
                 console.log(RED,`@asyncHandler error: ${error.message}`);
             } else {
                 res.send(customError + error.message)

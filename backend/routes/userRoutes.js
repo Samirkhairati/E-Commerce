@@ -22,9 +22,9 @@ router.route('/')
 router.route('/login').post(loginUser)
 router.route('/logout').post(logoutUser)
 
-router.route('/profile')
+router.route('/profile').put(userAuth, updateCurrentUserProfile)
     .get(userAuth, getCurrentUserProfile)
-    .put(userAuth, updateCurrentUserProfile)
+    
 
 router.route('/:id')
     .delete(userAuth, adminAuth, deleteUserById)
