@@ -22,7 +22,8 @@ router.route('/')
 router.route('/login').post(loginUser)
 router.route('/logout').post(logoutUser)
 
-router.route('/profile').put(userAuth, updateCurrentUserProfile)
+router.route('/profile')
+    .put(userAuth, updateCurrentUserProfile)
     .get(userAuth, getCurrentUserProfile)
     
 
