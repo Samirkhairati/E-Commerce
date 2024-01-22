@@ -9,7 +9,7 @@ function App() {
     <>
       <ToastContainer />
       <Navigation />
-      <main style={{}} className='main-sizing absolute right-0 bottom-0'>
+      <main className='main-sizing absolute right-0 bottom-0'>
         <Outlet />
       </main>
     </>
