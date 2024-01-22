@@ -1,8 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.main-sizing {
+    width: 100%;
+    height: calc(100vh - 4rem)
+}out
+@media (min-width: 640px) {
+    .main-sizing {
+        width: calc(100vw - 12rem);
+        height: calc(100vh - 3.75rem)
+    }
 }
