@@ -11,7 +11,7 @@
 .main-sizing {
     width: 100%;
     height: calc(100vh - 4rem)
-}out
+}
 @media (min-width: 640px) {
     .main-sizing {
         width: calc(100vw - 12rem);
