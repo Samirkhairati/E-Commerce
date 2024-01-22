@@ -12,10 +12,13 @@ import {
   createBrowserRouter,
   Router
 } from 'react-router-dom'
+import { SignIn } from './pages/auth/SignIn.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={< App />}> </Route>
+    <Route path='/' element={< App />}>
+      <Route path='/login' element={<SignIn />}></Route>
+    </Route>
   )
 )
 

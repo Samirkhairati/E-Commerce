@@ -1,15 +1,34 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiHome, HiHeart, HiShoppingCart } from 'react-icons/hi';
 import { HiShoppingBag } from "react-icons/hi2";
+import { useDispatch, useSelector } from "react-redux";
+import { useLogoutMutation } from "../../actions/api/usersApiSlice";
 
 const Navigation = () => {
-
+    // React Hooks
     const [dropDownMenu, setDropDownMenu] = useState(true);
     const [showSideBar, setShowSideBar] = useState(false);
-
     const toggleDropDownMenu = () => { setDropDownMenu(!dropDownMenu) };
     const toggleSideBar = () => { setShowSideBar(!showSideBar); };
+
+    //Redux
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {userInfo} = useSelector((state) => state.auth);
+
+    const [logoutApiCall] = useLogoutMutation();
+    const logoutHandler = async () => {
+        try {
+            await logoutApiCall();
+            dispatch({ type: "USER_LOGOUT" });
+            navigate("/login");
+        } catch (error) {
+            console.log(error);
+        }
+
+
+    };
 
     return (
         <>
@@ -29,38 +48,50 @@ const Navigation = () => {
                             </Link>
                         </div>
                         <div className="flex items-center">
-                            <div className="flex items-center ms-3">
-                                <div>
-                                    <button onClick={toggleDropDownMenu} type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                                        <span className="sr-only">Open user menu</span>
-                                        <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo"></img>
-                                    </button>
-                                </div>
-                                <div className={`${dropDownMenu ? 'hidden' : 'absolute right-4 top-14' } z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="dropdown-user">
-                                    <div className="px-4 py-3" role="none">
-                                        <p className="text-sm text-gray-900 dark:text-white" role="none">
-                                            Neil Sims
-                                        </p>
-                                        <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                            neil.sims@flowbite.com
-                                        </p>
+                            { !userInfo ?
+                                <Link to="/login"
+                                    class="bg-blue-600 inline-flex items-center w-full px-3 py-2 text-sm font-normal rounded-md text-white hover:bg-blue-700 hover:border-gray-300">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                                    </svg>
+                                    Login/Register
+                                </Link>
+                                :
+                                <div className="flex items-center ms-3">
+                                    <div>
+                                        <button onClick={toggleDropDownMenu} type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                            <span className="sr-only">Open user menu</span>
+                                            <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo"></img>
+                                        </button>
                                     </div>
-                                    <ul className="py-1" role="none">
-                                        <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+
+                                    <div className={`${dropDownMenu ? 'hidden' : 'absolute right-4 top-14'} z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="dropdown-user">
+                                        <div className="px-4 py-3" role="none">
+                                            <p className="text-sm text-gray-900 dark:text-white" role="none">
+                                                {userInfo}
+                                            </p>
+                                            <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                                                neil.sims@flowbite.com
+                                            </p>
+                                        </div>
+                                        <ul className="py-1" role="none">
+                                            <li>
+                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>}
                         </div>
                     </div>
                 </div>

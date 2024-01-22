@@ -6,7 +6,7 @@ import authReducer from "./reducers/authSlice";
 const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
-        //   auth: authReducer,
+        auth: authReducer,
         //   favorites: favoritesReducer,
         //   cart: cartSliceReducer,
         //   shop: shopReducer,
