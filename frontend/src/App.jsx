@@ -13,7 +13,7 @@ function App() {
     <>
       <ToastContainer />
       <Navigation />
-      <main className='py-33'>
+      <main className='flex-grow'>
         <Outlet />
       </main>
     </>
