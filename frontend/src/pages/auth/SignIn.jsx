@@ -14,7 +14,7 @@ export const SignIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [login, { isLoading }] = useLoginMutation();
+    const [loginApiCall, { isLoading }] = useLoginMutation();
 
     const { userInfo } = useSelector((state) => state.auth);
 
@@ -31,7 +31,7 @@ export const SignIn = () => {
     const submitHandler = async (event) => {
         event.preventDefault();
         try {
-            const res = await login({ email, password }).unwrap();
+            const res = await loginApiCall({ email, password }).unwrap();
             dispatch(setCredentials({ ...res }));
             navigate(redirect);
             toast.success("Logged in successfully");

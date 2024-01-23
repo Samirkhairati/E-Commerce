@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useLoginMutation } from "../../actions/api/usersApiSlice";
+import { useRegisterMutation } from "../../actions/api/usersApiSlice";
 import { setCredentials } from "../../actions/reducers/authSlice";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -15,7 +15,7 @@ export const SignUp = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [login, { isLoading }] = useLoginMutation();
+    const [register, { isLoading }] = userRegisterMutation();
 
     const { userInfo } = useSelector((state) => state.auth);
 
@@ -54,7 +54,7 @@ export const SignUp = () => {
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Create an account
                         </h1>
-                        <form className="space-y-4 md:space-y-6" action="#">
+                        <form onSubmit={submitHandler} className="space-y-4 md:space-y-6" action="#">
                             <div>
                                 <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your User Name</label>
                                 <input
