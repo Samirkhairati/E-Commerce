@@ -1,8 +1,8 @@
 // packages
 import express from 'express';
 import dotenv from 'dotenv';
-import path from 'path';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 // utils
 import connectDB from './config/db.js';
@@ -17,6 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // routes
 app.use('/api/users', userRoutes);
