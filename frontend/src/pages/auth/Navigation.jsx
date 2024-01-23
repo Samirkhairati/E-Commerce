@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const Navigation = () => {
     // React Hooks
-    const [dropDownMenu, setDropDownMenu] = useState(true);
+    const [dropDownMenu, setDropDownMenu] = useState(false);
     const [showSideBar, setShowSideBar] = useState(false);
     const toggleDropDownMenu = () => { setDropDownMenu(!dropDownMenu) };
     const toggleSideBar = () => { setShowSideBar(!showSideBar); };
@@ -64,7 +64,7 @@ const Navigation = () => {
                                     <div>
                                         <button onClick={toggleDropDownMenu} type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                             <span className="sr-only">Open user menu</span>
-                                            <img className="w-8 h-8 rounded-full" src="/logo.svg" alt="user photo"></img>
+                                            <img className="w-8 h-8 rounded-full" src="/profile.svg" alt="user photo"></img>
                                         </button>
                                     </div>
 

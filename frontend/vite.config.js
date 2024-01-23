@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api/": 'https://e-commerce-production-8ee5.up.railway.app',
+      "/api/": 'http://localhost:6969',
     },
   },
 });
