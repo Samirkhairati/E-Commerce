@@ -1,2 +1,2 @@
-export const BASE_URL = 'http://localhost:8000/api/'
-export const USERS_URL = 'http://localhost:8000/api/users/'
+export const BASE_URL = ''
+export const USERS_URL = '/api/users'

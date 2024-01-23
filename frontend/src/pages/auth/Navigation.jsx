@@ -43,7 +43,7 @@ const Navigation = () => {
                                 </svg>
                             </button>
                             <Link to="/" className="flex ms-2 md:me-24">
-                                <img src="flowbite.svg" className="h-8 me-3" alt="FlowBite Logo" />
+                                <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 me-3" alt="FlowBite Logo" />
                                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Store</span>
                             </Link>
                         </div>
@@ -70,10 +70,10 @@ const Navigation = () => {
                                     <div className={`${dropDownMenu ? 'hidden' : 'absolute right-4 top-14'} z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="dropdown-user">
                                         <div className="px-4 py-3" role="none">
                                             <p className="text-sm text-gray-900 dark:text-white" role="none">
-                                                {userInfo}
+                                                {userInfo?.username}
                                             </p>
                                             <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                                neil.sims@flowbite.com
+                                                {userInfo?.email}
                                             </p>
                                         </div>
                                         <ul className="py-1" role="none">
