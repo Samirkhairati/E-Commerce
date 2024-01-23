@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api/": process.env.BACKEND_URL || "http://localhost:6969",
+      "/api/": 'https://e-commerce-production-8ee5.up.railway.app',
     },
   },
 });
