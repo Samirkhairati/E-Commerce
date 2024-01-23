@@ -19,7 +19,10 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(
     {
-        origin: 'https://e-commerce-production-ecfb.up.railway.app', //localhost:5173 for development || localhost:3000 for build
+        // origin: 'https://e-commerce-production-ecfb.up.railway.app', Railway URL
+        // origin: 'http://localhost:5173', Development URL
+        // origin: 'http://localhost:3000', Build URL
+        origin:  process.env.FRONTEND_URL, 
         credentials: true,
     }
 ));
