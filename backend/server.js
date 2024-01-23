@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(
     {
-        origin: 'localhost:3000', //localhost:5173 for development
+        origin: 'http://localhost:3000', //localhost:5173 for development
         credentials: true,
     }
 ));
