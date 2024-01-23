@@ -17,7 +17,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(
+    {
+        origin: 'localhost:5173', //localhost:5173 for development
+        credentials: true,
+    }
+));
 
 // routes
 app.use('/api/users', userRoutes);
