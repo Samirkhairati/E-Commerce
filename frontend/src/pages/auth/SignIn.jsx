@@ -3,8 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../../actions/api/usersApiSlice";
 import { setCredentials } from "../../actions/reducers/authSlice";
-//import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const SignIn = () => {
 
@@ -32,11 +32,11 @@ export const SignIn = () => {
         event.preventDefault();
         try {
             const res = await login({ email, password }).unwrap();
-            //console.log(res);
             dispatch(setCredentials({ ...res }));
             navigate(redirect);
+            toast.success("Logged in successfully");
         } catch (err) {
-            //toast.error(err?.data?.message || err.error);
+            toast.error(err?.data?.message || err.error);
         }
     };
 

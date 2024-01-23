@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { HiHome, HiHeart, HiShoppingCart } from 'react-icons/hi';
+import { HiHome, HiHeart, HiShoppingCart, HiOutlineAdjustments } from 'react-icons/hi';
 import { HiShoppingBag } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../../actions/api/usersApiSlice";
+import { logout } from "../../actions/reducers/authSlice";
+import { toast } from "react-toastify";
 
 const Navigation = () => {
     // React Hooks
@@ -21,13 +23,12 @@ const Navigation = () => {
     const logoutHandler = async () => {
         try {
             await logoutApiCall();
-            dispatch({ type: "USER_LOGOUT" });
+            dispatch(logout());
             navigate("/login");
+            toast.success("Logged out successfully");
         } catch (error) {
             console.log(error);
         }
-
-
     };
 
     return (
@@ -49,7 +50,7 @@ const Navigation = () => {
                         </div>
                         <div className="flex items-center">
                             { !userInfo ?
-                                <Link to="/login"
+                                <Link to="/login" 
                                     className="bg-blue-600 inline-flex items-center w-full px-3 py-2 text-sm font-normal rounded-md text-white hover:bg-blue-700 hover:border-gray-300">
                                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -77,7 +78,7 @@ const Navigation = () => {
                                             </p>
                                         </div>
                                         <ul className="py-1" role="none">
-                                            <li>
+                                            {/* <li>
                                                 <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
                                             </li>
                                             <li>
@@ -85,9 +86,9 @@ const Navigation = () => {
                                             </li>
                                             <li>
                                                 <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                                            </li>
+                                            </li> */}
                                             <li>
-                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                                                <button onClick={logoutHandler} className="w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -133,6 +134,14 @@ const Navigation = () => {
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <HiHeart className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                                 <span className="ms-3">Favourites</span>{" "}
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/profile"
+                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <HiOutlineAdjustments className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                                <span className="ms-3">Settings</span>{" "}
                             </Link>
                         </li>
                     </ul>
