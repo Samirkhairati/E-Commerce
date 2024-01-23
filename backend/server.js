@@ -22,9 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => {
-    res.send('API is running...');
+    res.send(`API is running on port ${process.env.PORT}...`);
 })
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 6969, () => {
     console.log(`Server running on port ${process.env.PORT || 6969}`);
 });
