@@ -44,7 +44,7 @@ const Navigation = () => {
                                 </svg>
                             </button>
                             <Link to="/" className="flex ms-2 md:me-24">
-                                <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 me-3" alt="FlowBite Logo" />
+                                <img src="/logo.svg" className="h-8 me-3" alt="FlowBite Logo" />
                                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Store</span>
                             </Link>
                         </div>
@@ -64,7 +64,7 @@ const Navigation = () => {
                                     <div>
                                         <button onClick={toggleDropDownMenu} type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                             <span className="sr-only">Open user menu</span>
-                                            <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo"></img>
+                                            <img className="w-8 h-8 rounded-full" src="/logo.svg" alt="user photo"></img>
                                         </button>
                                     </div>
 
