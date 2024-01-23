@@ -1,6 +1,7 @@
-#Description:
+# Description:
 An E Commerice Website based on MERN Stack
-#Usage:
+
+# Usage:
 After git cloning, and opening the folder
 ```
 npm i
