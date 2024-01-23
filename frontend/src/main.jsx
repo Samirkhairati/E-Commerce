@@ -13,11 +13,13 @@ import {
   Router
 } from 'react-router-dom'
 import { SignIn } from './pages/auth/SignIn.jsx';
+import { SignUp } from './pages/auth/SignUp.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={< App />}>
       <Route path='/login' element={<SignIn />}></Route>
+      <Route path='/register' element={<SignUp />}></Route>
     </Route>
   )
 )
