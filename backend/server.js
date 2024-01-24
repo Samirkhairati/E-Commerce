@@ -26,7 +26,7 @@ app.use(cors(
         credentials: true,
     }
 ));
-
+console.log(process.env.FRONTEND_URL);
 // routes
 app.use('/api/users', userRoutes);
 
