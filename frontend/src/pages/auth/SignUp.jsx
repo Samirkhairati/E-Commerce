@@ -32,16 +32,12 @@ export const SignUp = () => {
     const submitHandler = async (event) => {
         event.preventDefault();
         try {
-            alert("tried")
-            alert({ username, email, password })
             const res = await register({ username, email, password }).unwrap();
-            alert(res)
             dispatch(setCredentials({ ...res }));
             navigate(redirect);
             toast.success("Account created successfully");
         } catch (err) {
-            toast.error(err?.data?.message || err.error);
-            alert(err?.data?.message || err.error)
+            toast.error(err.data);
         }
     };
 
