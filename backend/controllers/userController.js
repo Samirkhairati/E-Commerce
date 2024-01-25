@@ -30,14 +30,12 @@ const createUser = asyncHandler(async (req, res, next) => {
     try {
         await user.save();
         createToken(res, user._id);
-        console.log('lessgo1')
         res.status(201).json({
             _id: user._id,
             username: user.username,
             email: user.email,
             password: user.password,
         })
-        console.log('lessgo2')
     } catch (error) {
         res.status(400);
         throw new Error('@createUser ERROR: User could not be created');
