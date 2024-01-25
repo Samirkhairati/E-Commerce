@@ -1,5 +1,5 @@
 import Category from "../models/categoryModel.js";
-import asyncHandler from "../middlewares/asyncHandler.js";
+import asyncHandler from "../middleware/asyncHandler.js";
 
 const createCategory = asyncHandler(async (req, res) => {
     const { name } = req.body;
@@ -44,7 +44,12 @@ const updateCategory = asyncHandler(async (req, res) => {
 
 const removeCategory = asyncHandler(async (req, res) => {
     try {
-        const removed = await Category.findByIdAndRemove(req.params.categoryId);
+        const removed = await Category.findById(req.params.categoryId);
+        if (removed) {
+            await User.deleteOne({ _id: req.params.id });
+        } else {
+            throw new Error('@removeCategory ERROR: cannot find category');
+        }
         res.status(200).json(removed);
     } catch (error) {
         res.status(500)

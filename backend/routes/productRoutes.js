@@ -14,8 +14,8 @@ import {
   fetchNewProducts,
   filterProducts,
 } from "../controllers/productController.js";
-import { userAuth, adminAuth } from "../middlewares/authMiddleware.js";
-import checkId from "../middlewares/checkId.js";
+import { userAuth, adminAuth } from "../middleware/authMiddleware.js";
+import checkId from "../middleware/checkId.js";
 
 router.route("/")
   .get(fetchProducts)

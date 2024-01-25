@@ -13,21 +13,21 @@ import {
   markOrderAsDelivered,
 } from "../controllers/orderController.js";
 
-import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
+import { userAuth, adminAuth } from "../middleware/authMiddleware.js";
 
 router
   .route("/")
-  .post(authenticate, createOrder)
-  .get(authenticate, authorizeAdmin, getAllOrders);
+  .post(userAuth, createOrder)
+  .get(userAuth, adminAuth, getAllOrders);
 
-router.route("/mine").get(authenticate, getUserOrders);
+router.route("/mine").get(userAuth, getUserOrders);
 router.route("/total-orders").get(countTotalOrders);
 router.route("/total-sales").get(calculateTotalSales);
 router.route("/total-sales-by-date").get(calcualteTotalSalesByDate);
-router.route("/:id").get(authenticate, findOrderById);
-router.route("/:id/pay").put(authenticate, markOrderAsPaid);
+router.route("/:id").get(userAuth, findOrderById);
+router.route("/:id/pay").put(userAuth, markOrderAsPaid);
 router
   .route("/:id/deliver")
-  .put(authenticate, authorizeAdmin, markOrderAsDelivered);
+  .put(userAuth, adminAuth, markOrderAsDelivered);
 
 export default router;
