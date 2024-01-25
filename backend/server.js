@@ -7,6 +7,7 @@ import cors from 'cors';
 // utils
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
+import categoryRoutes from './routes/categoryRoutes.js';
 
 // setup
 dotenv.config();
@@ -28,6 +29,7 @@ app.use(cors(
 ));
 // routes
 app.use('/api/users', userRoutes);
+app.use('/api/categories', categoryRoutes);
 
 app.get('/', (req, res) => {
     res.send(`API is running on port ${process.env.PORT}...`);
