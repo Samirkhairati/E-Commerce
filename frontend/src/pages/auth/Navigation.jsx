@@ -2,17 +2,19 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { HiHome, HiHeart, HiShoppingCart, HiOutlineAdjustments } from 'react-icons/hi';
 import { HiUser } from "react-icons/hi2";
-import { MdDashboard } from "react-icons/md";
-import { FaLock } from "react-icons/fa6";
+import { MdDashboard, MdCategory } from "react-icons/md";
+import { FaVolleyballBall, FaSyncAlt, } from "react-icons/fa";
+import { FaLock, FaUsers, FaListCheck } from "react-icons/fa6";
 import { HiShoppingBag } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../../actions/api/usersApiSlice";
 import { logout } from "../../actions/reducers/authSlice";
 import { toast } from "react-toastify";
+import SidebarLink from "../../components/SidebarLink";
 
 const Navigation = () => {
     // React Hooks
-    const [dropDownMenu, setDropDownMenu] = useState(false);
+    const [dropDownMenu, setDropDownMenu] = useState(true);
     const [showSideBar, setShowSideBar] = useState(false);
     const toggleDropDownMenu = () => { setDropDownMenu(!dropDownMenu) };
     const toggleSideBar = () => { setShowSideBar(!showSideBar); };
@@ -29,6 +31,7 @@ const Navigation = () => {
             dispatch(logout());
             navigate("/login");
             toast.success("Logged out successfully");
+            setDropDownMenu(true);
         } catch (error) {
             console.log(error);
         }
@@ -107,97 +110,24 @@ const Navigation = () => {
                 fixed top-0 left-0 z-40 w-48 h-screen pt-20 transition-transform ease-in-out bg-white border-r border-gray-700 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">`}>
                 <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
                     <ul className="space-y-2 font-medium">
-                        <li>
-                            <Link
-                                to="/"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <HiHome className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="ms-3">Home</span>{" "}
-                            </Link>
+                        <SidebarLink link='/' name='Home' icon={HiHome} ></SidebarLink>
+                        <SidebarLink link="/shop" name="Shop" icon={HiShoppingBag} />
+                        <SidebarLink link="/cart" name="Cart" icon={HiShoppingCart} />
+                        <SidebarLink link="/favourites" name="Favourites" icon={HiHeart} />
+                        <SidebarLink link="/profile" name="Profile" icon={HiUser} />
+                        <SidebarLink link="/settings" name="Settings" icon={HiOutlineAdjustments} />
+                        <SidebarLink link="/admin/userlist" name="Users" icon={FaUsers} admin="yes" />
+                        <SidebarLink link="/" name="Categories" icon={MdDashboard} admin="yes" />
+                        <SidebarLink link="/" name="Products" icon={MdCategory} admin="yes" />
+                        <SidebarLink link="/" name="All Products" icon={FaVolleyballBall} admin="yes" />
+                        <SidebarLink link="/" name="Update" icon={FaSyncAlt} admin="yes" />
+                        <SidebarLink link="/" name="Orders" icon={FaListCheck} admin="yes" />
+                        <li> 
+                            <div className="mt-40 flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-blue-500 dark:bg-blue-600 group">
+                                <FaLock className="w-5 h-5 relative p-[4px] text-blue-500 bg-blue-900 border-rad rounded-md" />
+                                <span className="flex-1 ms-3 whitespace-nowrap">Admin only</span>
+                            </div>
                         </li>
-                        <li>
-                            <Link
-                                to="/shop"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <HiShoppingBag className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="ms-3">Shop</span>{" "}
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                to="/cart"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <HiShoppingCart className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="ms-3">Cart</span>{" "}
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                to="/favourites"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <HiHeart className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="ms-3">Favourites</span>{" "}
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                to="/profile"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <HiUser className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="ms-3">Profile</span>{" "}
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                to="/settings"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <HiOutlineAdjustments className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="ms-3">Settings</span>{" "}
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/" className="relative flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <MdDashboard className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
-                                <FaLock className="w-5 h-5 absolute right-2 p-[4px] text-blue-400 bg-blue-800 border-rad rounded-md" />
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/" className="relative flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <MdDashboard className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Categories</span>
-                                <FaLock className="w-5 h-5 absolute right-2 p-[4px] text-blue-400 bg-blue-800 border-rad rounded-md" />
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/" className="relative flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <MdDashboard className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Products</span>
-                                <FaLock className="w-5 h-5 absolute right-2 p-[4px] text-blue-400 bg-blue-800 border-rad rounded-md" />
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/" className="relative flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <MdDashboard className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="flex-1 ms-3 whitespace-nowrap">All Products</span>
-                                <FaLock className="w-5 h-5 absolute right-2 p-[4px] text-blue-400 bg-blue-800 border-rad rounded-md" />
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/" className="relative flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <MdDashboard className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Update</span>
-                                <FaLock className="w-5 h-5 absolute right-2 p-[4px] text-blue-400 bg-blue-800 border-rad rounded-md" />
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/" className="relative flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <MdDashboard className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Orders</span>
-                                <FaLock className="w-5 h-5 absolute right-2 p-[4px] text-blue-400 bg-blue-800 border-rad rounded-md" />
-                            </Link>
-                        </li>
-                        
                     </ul>
                 </div>
             </aside>
