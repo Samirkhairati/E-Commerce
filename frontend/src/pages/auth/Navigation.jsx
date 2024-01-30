@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { HiHome, HiHeart, HiShoppingCart, HiOutlineAdjustments } from 'react-icons/hi';
 import { HiUser } from "react-icons/hi2";
 import { MdDashboard, MdCategory } from "react-icons/md";
-import { FaVolleyballBall, FaSyncAlt, } from "react-icons/fa";
+import { FaVolleyballBall, FaSyncAlt, FaNodeJs } from "react-icons/fa";
 import { FaLock, FaUsers, FaListCheck } from "react-icons/fa6";
 import { HiShoppingBag } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,11 @@ import { useLogoutMutation } from "../../actions/api/usersApiSlice";
 import { logout } from "../../actions/reducers/authSlice";
 import { toast } from "react-toastify";
 import SidebarLink from "../../components/SidebarLink";
+import TechStack from "../../components/TechStack";
+import { SiExpress, SiMongodb, SiReact, SiRedux, SiHtml5, SiCss3, SiJavascript } from "react-icons/si";
+import { TbBrandVite } from "react-icons/tb";
+
+
 
 const Navigation = () => {
     // React Hooks
@@ -54,7 +59,18 @@ const Navigation = () => {
                                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Store</span>
                             </Link>
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-center text-slate-300">
+                            <div className="flex flex-row py-2.5 px-3 rounded-md mx-5 bg-slate-900">
+                                <TechStack icon={SiHtml5} color='red' />
+                                <TechStack icon={SiCss3} color='blue' />
+                                <TechStack icon={SiJavascript} color='yellow' />
+                                <TechStack icon={SiExpress} color='slate' />
+                                <TechStack icon={SiMongodb} color='green' />
+                                <TechStack icon={FaNodeJs} color='indigo' />
+                                <TechStack icon={SiReact} color='blue' />
+                                <TechStack icon={SiRedux} color='purple' />
+                                <TechStack icon={TbBrandVite} color='pink' />
+                            </div>
                             {!userInfo ?
                                 <Link to="/login"
                                     className="bg-blue-600 inline-flex items-center w-full px-3 py-2 text-sm font-normal rounded-md text-white hover:bg-blue-700 hover:border-gray-300">
@@ -122,7 +138,7 @@ const Navigation = () => {
                         <SidebarLink link="/" name="All Products" icon={FaVolleyballBall} admin="yes" />
                         <SidebarLink link="/" name="Update" icon={FaSyncAlt} admin="yes" />
                         <SidebarLink link="/" name="Orders" icon={FaListCheck} admin="yes" />
-                        <li> 
+                        <li>
                             <div className="mt-40 flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-blue-500 dark:bg-blue-600 group">
                                 <FaLock className="w-5 h-5 relative p-[4px] text-blue-500 bg-blue-900 border-rad rounded-md" />
                                 <span className="flex-1 ms-3 whitespace-nowrap">Admin only</span>

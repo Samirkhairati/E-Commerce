@@ -9,6 +9,7 @@
 }
 body {
     background-color: rgb(16, 27, 42);
+    color: rgb(255, 255, 255);
 }
 .main-sizing {
     width: 100%;

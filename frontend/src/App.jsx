@@ -12,6 +12,14 @@ function App() {
       <main className='main-sizing absolute right-0 bottom-0'>
         <Outlet />
       </main>
+      <div className='hidden tailwind-utility-extractor'>
+        <div className="text-red-400"></div>
+        <div className="text-blue-400"></div>
+        <div className="text-green-400"></div>
+        <div className="text-purple-400"></div>
+        <div className="text-pink-400"></div>
+        <div className="text-indigo-400"></div>
+      </div>
     </>
   )
 }
