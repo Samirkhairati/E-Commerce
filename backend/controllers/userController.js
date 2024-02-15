@@ -115,7 +115,6 @@ const getCurrentUserProfile = asyncHandler(async (req, res, next) => {
             _id: user._id,
             username: user.username,
             email: user.email,
-            isAdmin: user.isAdmin,
         });
     } else {
         res.status(404);
