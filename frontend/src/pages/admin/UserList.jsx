@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const UserList = () => {
 
     const { data: users, refetch, isLoading, error } = useGetUsersQuery();
-
+    console.log(data)
     const [editUserDrawer, toggleEditUserDrawer] = useState(true);
     const handleEditButtonClick = (userId) => {
         toggleEditUserDrawer(!editUserDrawer);
