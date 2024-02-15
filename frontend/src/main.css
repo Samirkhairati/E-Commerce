@@ -7,9 +7,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-body {
-    background-color: rgb(16, 27, 42);
-}
+
 .main-sizing {
     width: 100%;
     height: calc(100vh - 4rem)
