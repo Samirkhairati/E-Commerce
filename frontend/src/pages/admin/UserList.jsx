@@ -6,30 +6,6 @@ const UserList = () => {
 
     const { data: users, refetch, isLoading, error } = useGetUsersQuery();
 
-    const [editUserDrawer, toggleEditUserDrawer] = useState(true);
-    const handleEditButtonClick = (userId) => {
-        toggleEditUserDrawer(!editUserDrawer);
-        // Your logic for handling edit button click goes here
-    };
-
-    const [deleteUserDrawer, toggleDeleteUserDrawer] = useState(false);
-    const handleDeleteButtonClick = (userId) => {
-        alert(`Delete button clicked for user with ID ${userId}`);
-        // Your logic for handling delete button click goes here
-    };
-
-    const [deleteUser] = useDeleteUserMutation();
-    const [updateUser] = useUpdateUserMutation();
-
-    const [editableUserId, setEditableUserId] = useState(null);
-    const [editableUserName, setEditableUserName] = useState("");
-    const [editableUserEmail, setEditableUserEmail] = useState("");
-
-    useEffect(() => {
-        refetch();
-    }, [refetch]);
-
-
     return (<>
         {isLoading ? <div className="text-white">
             <div className="w-full h-96 flex items-center justify-center">
