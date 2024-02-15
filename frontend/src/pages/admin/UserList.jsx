@@ -1,13 +1,11 @@
 import UserRow from "../../components/UserRow";
-import { useGetUsersQuery, useDeleteUserMutation, useUpdateUserMutation } from "../../actions/api/usersApiSlice";
+import { useGetUsersQuery } from "../../actions/api/usersApiSlice";
 import { toast } from "react-toastify";
-import Drawer from "../../components/Drawer";
-import { useEffect, useState } from "react";
 
 const UserList = () => {
 
     const { data: users, refetch, isLoading, error } = useGetUsersQuery();
-    console.log(data)
+
     const [editUserDrawer, toggleEditUserDrawer] = useState(true);
     const handleEditButtonClick = (userId) => {
         toggleEditUserDrawer(!editUserDrawer);
@@ -44,32 +42,24 @@ const UserList = () => {
         </div>
             : error ? <div>{toast.error(JSON.stringify(error.data))}</div>
                 :
-        <>
-        <Drawer open={editUserDrawer} drawerClose={() => {toggleEditUserDrawer(!editUserDrawer)}} ></Drawer>
-
-        <table className="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-600">
-            <thead className="bg-gray-100 dark:bg-gray-700">
-                <tr>
-                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">No.</th>
-                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Name</th>
-                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">ID</th>
-                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Admin</th>
-                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Actions</th>
-                </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-                {users.map((user, index) => {
-                    return (
-                        <UserRow
-                            editButton={() => handleEditButtonClick(user._id)}
-                            deleteButton={() => handleDeleteButtonClick(user._id)}
-                            no={index + 1} username={user.username} email={user.email} dataid={user._id} admin={user.isAdmin} key={index} />
-                    );
-                })}
-            </tbody>
-        </table>
-        </>
-        }
+                <table className="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-600">
+                    <thead className="bg-gray-100 dark:bg-gray-700">
+                        <tr>
+                            <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">No.</th>
+                            <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Name</th>
+                            <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">ID</th>
+                            <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Admin</th>
+                            <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
+                        {users.map((user, index) => {
+                            return (
+                                <UserRow no={index+1} username={user.username} email={user.email} dataid={user._id} admin={user.isAdmin} />
+                            );
+                        })}
+                    </tbody>
+                </table>}
     </>
     );
 };

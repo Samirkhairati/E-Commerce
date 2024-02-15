@@ -66,7 +66,7 @@ export const {
   useLogoutMutation,
   useProfileMutation,
   useGetUsersQuery,
-  useDeleteUserMutation,
-  useUpdateUserMutation,
+//   useDeleteUserMutation,
+//   useUpdateUserMutation,
 //   useGetUserDetailsQuery,
 } = userApiSlice;
