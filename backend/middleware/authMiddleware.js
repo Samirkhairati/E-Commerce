@@ -4,6 +4,9 @@ import User from '../models/userModel.js';
 
 const userAuth = asyncHandler(async (req, res, next) => {
     const token = req.cookies.jwt;
+    console.log(req.cookies);
+    console.log(req.cookies.jwt);
+    console.log(req)
     if (token) {
         try {
             const decoded = jwt.verify(token, process.env.JWT);
