@@ -18,6 +18,7 @@ import { SignIn } from './pages/auth/SignIn.jsx';
 import { SignUp } from './pages/auth/SignUp.jsx';
 
 import AdminRoute from './pages/admin/AdminRoute.jsx';
+import UserList from './pages/admin/UserList.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +27,7 @@ const router = createBrowserRouter(
       <Route path='/register' element={<SignUp />}></Route>
 
       <Route path="/admin" element={<AdminRoute />}>
-        <Route path="userlist" element={<></>} />
+        <Route path="userlist" element={<UserList/>} />
         {/* <Route path="categorylist" element={<CategoryList />} />
         <Route path="productlist" element={<ProductList />} />
         <Route path="allproductslist" element={<AllProducts />} />

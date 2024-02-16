@@ -3,6 +3,7 @@ const asyncHandler = (givenFunction, customError) => {
         try {
             await givenFunction(req, res, next);
             console.log("successful")
+            console.log("successful" + Date.now());
         } catch (error) {
             if (customError === undefined) {
                 //res.send(error.message)
