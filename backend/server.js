@@ -22,15 +22,15 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser(process.env.JWT));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(
      {
     //     // origin: 'https://e-commerce-production-ecfb.up.railway.app', Railway URL
     //     // origin: 'http://localhost:5173', //Development URL
     //     // origin: 'http://localhost:3000', Build URL
-    //    origin:  process.env.FRONTEND_URL || 'http://localhost:5173',
-    //     credentials: true,
+       origin:  process.env.FRONTEND_URL || 'http://localhost:5173',
+       credentials: true,
      }
 ));
 // routes

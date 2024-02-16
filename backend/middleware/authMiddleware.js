@@ -3,7 +3,7 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import User from '../models/userModel.js';
 
 const userAuth = asyncHandler(async (req, res, next) => {
-    const token = req.cookies.jwt;
+    const token = req.signedCookies.jwt;
     if (token) {
         try {
             const decoded = jwt.verify(token, process.env.JWT);
