@@ -25,7 +25,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(crossDomainCookies)
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'true');
+    res.header('Access-Control-Allow-Methods', 'true');
+    res.header('Access-Control-Allow-Headers', 'true');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+  })
 app.use(cors(
      {
         // origin: 'https://e-commerce-production-ecfb.up.railway.app', Railway URL
