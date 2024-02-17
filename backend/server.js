@@ -25,7 +25,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-//app.use(crossDomainCookies)
+app.use(crossDomainCookies)
 app.use(cors(
      {
         // origin: 'https://e-commerce-production-ecfb.up.railway.app', Railway URL
@@ -33,7 +33,7 @@ app.use(cors(
         // origin: 'http://localhost:3000', Build URL
         origin: true,
        // origin:  process.env.FRONTEND_URL || 'http://localhost:5173',
-        credentials: true,
+        credentials: include,
      }
 ));
 // routes
