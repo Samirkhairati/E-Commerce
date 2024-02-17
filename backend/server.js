@@ -39,7 +39,7 @@ app.use(cors(
         // origin: 'http://localhost:3000', Build URL
         origin: true,
        // origin:  process.env.FRONTEND_URL || 'http://localhost:5173',
-        credentials: include,
+        credentials: true,
      }
 ));
 app.options('*', cors());
