@@ -10,7 +10,7 @@ const generateToken = (res, userId) => {
         httpOnly: true,
         secure: true,//process.env.NODE_ENV === 'production',
         sameSite: "none",
-        domain: "https://e-commerce-production-ecfb.up.railway.app",
+        domain: "e-commerce-production-ecfb.up.railway.app",
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
 
