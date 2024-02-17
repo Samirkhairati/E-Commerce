@@ -42,6 +42,8 @@ app.use(cors(
         credentials: include,
      }
 ));
+app.options('*', cors());
+
 // routes
 app.use("/api/users", userRoutes);
 app.use("/api/category", categoryRoutes);
