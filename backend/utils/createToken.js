@@ -8,9 +8,8 @@ const generateToken = (res, userId) => {
 
     res.cookie('jwt', token, {
         httpOnly: true,
-        secure: true,//process.env.NODE_ENV === 'production',
-        sameSite: "none",
-        domain: "e-commerce-production-ecfb.up.railway.app",
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: "None",
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
 
