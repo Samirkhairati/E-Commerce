@@ -12,8 +12,6 @@ import categoryRoutes from './routes/categoryRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import uploadRoutes from "./routes/uploadRoutes.js";
 import orderRoutes from './routes/orderRoutes.js';
-import crossDomainCookies from './middleware/crossDomainCookies.js';
-
 
 // setup
 dotenv.config();
@@ -25,27 +23,24 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Access-Token, X-Key, x-access-token, x-key, x-auth-token, x-auth-key, x-auth');
-    res.header('Access-Control-Allow-Credentials', true);
-    next();
-  })
-app.use(cors(
-     {
-        // origin: 'https://e-commerce-production-ecfb.up.railway.app', Railway URL
-        // origin: 'http://localhost:5173', //Development URL
-        // origin: 'http://localhost:3000', Build URL
-        origin: true,
-        allowedHeaders: "*",
-        allowMethods: "*",
-       // origin:  process.env.FRONTEND_URL || 'http://localhost:5173',
-        credentials: true,
-     }
-));
+app.use(
+	cors({
+		origin: function (origin, callback) {
+			// allow requests with no origin
+			// (like mobile apps or curl requests)
+			if (!origin) return callback(null, true);
+			if (['http:localhost:5173','http:localhost:3000','https://e-commerce-production-ecfb.up.railway.app'].indexOf(origin) === -1) {
+				var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+				return callback(new Error(msg), false);
+			}
+			return callback(null, true);
+		},
+	})
+);
 
 // routes
+
+
 app.use("/api/users", userRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/products", productRoutes);
