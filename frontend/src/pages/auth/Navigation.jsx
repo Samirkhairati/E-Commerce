@@ -58,7 +58,7 @@ const Navigation = () => {
                             </Link>
                         </div>
                         <div className="flex items-center text-slate-300">
-                            <div className="flex flex-row py-2.5 px-3 rounded-md mx-5 bg-slate-900">
+                            {/* <div className="flex flex-row py-2.5 px-3 rounded-md mx-5 bg-slate-900">
                                 <TechStack icon={SiHtml5} color='red' />
                                 <TechStack icon={SiCss3} color='blue' />
                                 <TechStack icon={SiJavascript} color='yellow' />
@@ -68,7 +68,7 @@ const Navigation = () => {
                                 <TechStack icon={SiReact} color='blue' />
                                 <TechStack icon={SiRedux} color='purple' />
                                 <TechStack icon={TbBrandVite} color='pink' />
-                            </div>
+                            </div> */}
                             {!userInfo ?
                                 <Link to="/login"
                                     className="bg-blue-600 inline-flex items-center w-full px-3 py-2 text-sm font-normal rounded-md text-white hover:bg-blue-700 hover:border-gray-300">
