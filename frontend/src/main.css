@@ -7,17 +7,42 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     background-color: rgb(16, 27, 42);
     color: white;
 }
+
 .main-sizing {
     width: 100%;
     height: calc(100vh - 4rem)
 }
+
 @media (min-width: 640px) {
     .main-sizing {
         width: calc(100vw - 12rem);
         height: calc(100vh - 3.75rem)
+    }
+}
+
+.loader {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid #FFF;
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }
