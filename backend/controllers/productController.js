@@ -2,78 +2,64 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import Product from "../models/productModel.js";
 
 const addProduct = asyncHandler(async (req, res) => {
-  try {
-    const { name, description, price, category, quantity, brand } = req.fields;
+  const { name, description, price, category, quantity, brand } = req.fields;
 
-    // Validation
-    switch (true) {
-      case !name:
-        return res.json({ error: "Name is required" });
-      case !brand:
-        return res.json({ error: "Brand is required" });
-      case !description:
-        return res.json({ error: "Description is required" });
-      case !price:
-        return res.json({ error: "Price is required" });
-      case !category:
-        return res.json({ error: "Category is required" });
-      case !quantity:
-        return res.json({ error: "Quantity is required" });
-    }
-
-    const product = new Product({ ...req.fields });
-    await product.save();
-    res.json(product);
-  } catch (error) {
-    console.error(error);
-    res.status(400).json(error.message);
+  // Validation
+  switch (true) {
+    case !name:
+      throw new Error("Name is required");
+    case !brand:
+      throw new Error("Brand is required");
+    case !description:
+      throw new Error("Description is required");
+    case !price:
+      throw new Error("Price is required");
+    case !category:
+      throw new Error("Category is required");
+    case !quantity:
+      throw new Error("Quantity is required");
   }
-});
+
+  const product = new Product({ ...req.fields });
+  await product.save();
+  res.json(product);
+}, '@addProduct ERROR: definition: ');
 
 const updateProductDetails = asyncHandler(async (req, res) => {
-  try {
-    const { name, description, price, category, quantity, brand } = req.fields;
+  const { name, description, price, category, quantity, brand } = req.fields;
 
-    // Validation
-    switch (true) {
-      case !name:
-        return res.json({ error: "Name is required" });
-      case !brand:
-        return res.json({ error: "Brand is required" });
-      case !description:
-        return res.json({ error: "Description is required" });
-      case !price:
-        return res.json({ error: "Price is required" });
-      case !category:
-        return res.json({ error: "Category is required" });
-      case !quantity:
-        return res.json({ error: "Quantity is required" });
-    }
-
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      { ...req.fields },
-      { new: true }
-    );
-
-    await product.save();
-
-    res.json(product);
-  } catch (error) {
-    console.error(error);
-    res.status(400).json(error.message);
+  // Validation
+  switch (true) {
+    case !name:
+      throw new Error("Name is required");
+    case !brand:
+      throw new Error("Brand is required");
+    case !description:
+      throw new Error("Description is required");
+    case !price:
+      throw new Error("Price is required");
+    case !category:
+      throw new Error("Category is required");
+    case !quantity:
+      throw new Error("Quantity is required");
   }
-});
+
+  const product = await Product.findByIdAndUpdate(
+    req.params.id,
+    { ...req.fields },
+    { new: true }
+  );
+
+  await product.save();
+
+  res.json(product);
+}, '@updateProductDetails ERROR: definition: ');
 
 const removeProduct = asyncHandler(async (req, res) => {
-  try {
-    const product = await Product.findByIdAndDelete(req.params.id);
-    res.json(product);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-});
+  const product = await Product.findByIdAndDelete(req.params.id);
+  res.json(product);
+
+}, '@removeProduct ERROR: definition: ');
 
 const fetchProducts = asyncHandler(async (req, res) => {
   try {
@@ -81,11 +67,11 @@ const fetchProducts = asyncHandler(async (req, res) => {
 
     const keyword = req.query.keyword
       ? {
-          name: {
-            $regex: req.query.keyword,
-            $options: "i",
-          },
-        }
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
       : {};
 
     const count = await Product.countDocuments({ ...keyword });
