@@ -10,7 +10,8 @@
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "test": "nodemon backend/config/db.js",
     "build": "npm i && npm i --prefix frontend && npm run build --prefix frontend",
-    "start": "node backend/server.js"
+    "start": "node backend/server.js",
+    "preview": "npm run build &&  npm run start"
   },
   "keywords": [],
   "author": "",
