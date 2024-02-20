@@ -23,7 +23,13 @@ const __dirname = path.resolve();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '/frontend/dist')));
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '/frontend/dist')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+    });
+} 
 app.use(cors(
      {
         // origin: 'https://e-commerce-production-ecfb.up.railway.app', Railway URL
@@ -42,9 +48,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/orders", orderRoutes);
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-});
+
 
 
 // TEST
