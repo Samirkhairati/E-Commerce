@@ -6,14 +6,14 @@ const createCategory = asyncHandler(async (req, res) => {
 
     if (!name) {
         res.status(400);
-        throw new Error('@createUser ERORR: Please provide all fields');
+        throw new Error('@createCategory ERROR: Name is required');
     }
 
     const existingCategory = await Category.findOne({ name });
 
     if (existingCategory) {
         res.status(400);
-        throw new Error('@createUser ERORR: Category already exists');
+        throw new Error('@createCategory ERROR: Category already exists');
     }
 
     const category = await new Category({ name }).save();
@@ -21,40 +21,30 @@ const createCategory = asyncHandler(async (req, res) => {
 }, "@createCategory ERROR: definition: ");
 
 const updateCategory = asyncHandler(async (req, res) => {
-    try {
-        const { name } = req.body;
-        const { categoryId } = req.params;
+    const { name } = req.body;
+    const { categoryId } = req.params;
 
-        const category = await Category.findOne({ _id: categoryId });
+    const category = await Category.findOne({ _id: categoryId });
 
-        if (!category) {
-            res.status(400);
-            throw new Error('@updateCategory ERROR: Category does not exist');
-        }
-
-        category.name = name;
-
-        const updatedCategory = await category.save();
-        res.json(updatedCategory);
-    } catch (error) {
-        res.status(400)
-        throw new Error('@createUser ERROR: User already exists');
+    if (!category) {
+        res.status(400);
+        throw new Error('@updateCategory ERROR: Category does not exist');
     }
+
+    category.name = name;
+
+    const updatedCategory = await category.save();
+    res.json(updatedCategory);
 }, "@updateCategory ERROR: definition: ");
 
 const removeCategory = asyncHandler(async (req, res) => {
-    try {
-        const removed = await Category.findById(req.params.categoryId);
-        if (removed) {
-            await User.deleteOne({ _id: req.params.id });
-        } else {
-            throw new Error('@removeCategory ERROR: cannot find category');
-        }
-        res.status(200).json(removed);
-    } catch (error) {
-        res.status(500)
+    const removed = await Category.findById(req.params.categoryId);
+    if (removed) {
+        await Category.deleteOne({ _id: req.params.id });
+    } else {
         throw new Error('@removeCategory ERROR: cannot find category');
     }
+    res.status(200).json(removed);
 }, "@removeCategory ERROR: definition: ");
 
 const listCategory = asyncHandler(async (req, res) => {
