@@ -40,16 +40,16 @@ const updateCategory = asyncHandler(async (req, res) => {
 const removeCategory = asyncHandler(async (req, res) => {
     const removed = await Category.findById(req.params.categoryId);
     if (removed) {
-        await Category.deleteOne({ _id: req.params.id });
+        await Category.deleteOne({ _id: req.params.categoryId });
+        res.status(200).json({ message: 'Category removed'});
     } else {
         throw new Error('@removeCategory ERROR: cannot find category');
     }
-    res.status(200).json(removed);
+    
 }, "@removeCategory ERROR: definition: ");
 
 const listCategory = asyncHandler(async (req, res) => {
     const all = await Category.find({});
-    console.log(all)
     res.json(all);
 }, "@listCategory ERROR: definition: ");
 
