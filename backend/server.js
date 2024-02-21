@@ -24,21 +24,15 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '/frontend/dist')));
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-    });
-} 
+app.use(express.static(path.join(__dirname, '/frontend/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 app.use(cors(
-     {
-        // origin: 'https://e-commerce-production-ecfb.up.railway.app', Railway URL
-        // origin: 'http://localhost:5173', //Development URL
-        // origin: 'http://localhost:3000', Build URL
+    {
         origin: true,
-       // origin:  process.env.FRONTEND_URL || 'http://localhost:5173',
         credentials: true,
-     }
+    }
 ));
 
 // routes
