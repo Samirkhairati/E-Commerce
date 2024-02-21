@@ -15,12 +15,13 @@ const UserList = () => {
     };
 
     const handleDeleteButtonClick = (userId) => {
-        alert(`Delete button clicked for user with ID ${userId}`);
-        deleteUserHandler(userId);
+        if (confirm(`Delete button clicked for user with ID ${userId}`)) {
+            deleteHandler(userId);
+        };
     };
 
     const [deleteUser] = useDeleteUserMutation();
-    const [updateUser, {updateIsLoading}] = useUpdateUserMutation();
+    const [updateUser, { updateIsLoading }] = useUpdateUserMutation();
 
     const [editableUserId, setEditableUserId] = useState(null);
     const [editableUserName, setEditableUserName] = useState("");
@@ -45,16 +46,13 @@ const UserList = () => {
         }
     };
     const deleteHandler = async (id) => {
-        if (window.confirm("Are you sure")) {
-          try {
+        try {
             await deleteUser(id);
             refetch();
-
-          } catch (err) {
+        } catch (err) {
             toast.error(err?.data?.message || err.error);
-          }
         }
-      };
+    };
 
     return (<>
         {isLoading ? <div className="text-white">
@@ -72,7 +70,7 @@ const UserList = () => {
                     <Drawer open={editUserDrawer} drawerClose={() => { toggleEditUserDrawer(!editUserDrawer) }} >
                         <div className="p-4 w-4/5 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                             <h3 className="mb-4 text-xl font-semibold dark:text-white">Edit Profile</h3>
-                            <form onSubmit={(e) => {e.preventDefault();updateHandler(editableUserId)}} action="#">
+                            <form onSubmit={(e) => { e.preventDefault(); updateHandler(editableUserId) }} action="#">
                                 <div className="flex flex-col space-y-6">
                                     <div className="">
                                         <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
