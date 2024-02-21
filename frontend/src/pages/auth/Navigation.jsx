@@ -137,7 +137,7 @@ const Navigation = () => {
                         <SidebarLink link="/" name="Update" icon={FaSyncAlt} admin="yes" />
                         <SidebarLink link="/" name="Orders" icon={FaListCheck} admin="yes" />
                         <li>
-                            <div className="mt-40 flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-blue-500 dark:bg-blue-600 group">
+                            <div className=" flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-blue-500 dark:bg-blue-600 group">
                                 <FaLock className="w-5 h-5 relative p-[4px] text-blue-500 bg-blue-900 border-rad rounded-md" />
                                 <span className="flex-1 ms-3 whitespace-nowrap">Admin only</span>
                             </div>
