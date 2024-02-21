@@ -19,7 +19,7 @@ const UserList = () => {
             deleteHandler(userId);
         };
     };
-
+ 
     const [deleteUser] = useDeleteUserMutation();
     const [updateUser, { updateIsLoading }] = useUpdateUserMutation();
 
