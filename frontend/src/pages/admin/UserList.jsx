@@ -3,6 +3,7 @@ import { useGetUsersQuery, useDeleteUserMutation, useUpdateUserMutation } from "
 import Drawer from "../../components/Drawer";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Loader from "../../components/Loader";
 
 const UserList = () => {
 
@@ -10,17 +11,16 @@ const UserList = () => {
     const [editUserDrawer, toggleEditUserDrawer] = useState(true);
     const handleEditButtonClick = (userId) => {
         toggleEditUserDrawer(!editUserDrawer);
-        // Your logic for handling edit button click goes here
+        setEditableUserId(userId);
     };
 
-    const [deleteUserDrawer, toggleDeleteUserDrawer] = useState(false);
     const handleDeleteButtonClick = (userId) => {
         alert(`Delete button clicked for user with ID ${userId}`);
-        // Your logic for handling delete button click goes here
+        deleteUserHandler(userId);
     };
 
     const [deleteUser] = useDeleteUserMutation();
-    const [updateUser] = useUpdateUserMutation();
+    const [updateUser, {updateIsLoading}] = useUpdateUserMutation();
 
     const [editableUserId, setEditableUserId] = useState(null);
     const [editableUserName, setEditableUserName] = useState("");
@@ -29,6 +29,32 @@ const UserList = () => {
     useEffect(() => {
         refetch();
     }, [refetch]);
+
+    const updateHandler = async (updateID) => {
+        try {
+            await updateUser({
+                userId: updateID,
+                username: editableUserName,
+                email: editableUserEmail,
+            });
+            setEditableUserId(null);
+            refetch();
+            toggleEditUserDrawer(!editUserDrawer);
+        } catch (err) {
+            toast.error(err?.data?.message || err.error);
+        }
+    };
+    const deleteHandler = async (id) => {
+        if (window.confirm("Are you sure")) {
+          try {
+            await deleteUser(id);
+            refetch();
+
+          } catch (err) {
+            toast.error(err?.data?.message || err.error);
+          }
+        }
+      };
 
     return (<>
         {isLoading ? <div className="text-white">
@@ -43,7 +69,29 @@ const UserList = () => {
             : error ? <div>{toast.error(JSON.stringify(error.data))}</div>
                 :
                 <>
-                    <Drawer open={editUserDrawer} drawerClose={() => { toggleEditUserDrawer(!editUserDrawer) }} ></Drawer>
+                    <Drawer open={editUserDrawer} drawerClose={() => { toggleEditUserDrawer(!editUserDrawer) }} >
+                        <div className="p-4 w-4/5 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                            <h3 className="mb-4 text-xl font-semibold dark:text-white">Edit Profile</h3>
+                            <form onSubmit={(e) => {e.preventDefault();updateHandler(editableUserId)}} action="#">
+                                <div className="flex flex-col space-y-6">
+                                    <div className="">
+                                        <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                                        <input type="text" name="username" id="name" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder={"username"} value={editableUserName} onChange={(e) => setEditableUserName(e.target.value)} />
+                                    </div>
+                                    <div className="col-span-6 sm:col-span-3">
+                                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Address</label>
+                                        <input type="email" name="email" id="email" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder={"email"} value={editableUserEmail} onChange={(e) => setEditableUserEmail(e.target.value)} />
+                                    </div>
+                                    <div className="col-span-6 sm:col-full">
+                                        <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                            type="submit">{updateIsLoading && <Loader></Loader>} Save all</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </Drawer>
 
                     <table className="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-600">
                         <thead className="bg-gray-100 dark:bg-gray-700">
