@@ -48,23 +48,14 @@ const removeCategory = asyncHandler(async (req, res) => {
 }, "@removeCategory ERROR: definition: ");
 
 const listCategory = asyncHandler(async (req, res) => {
-    try {
-        const all = await Category.find({});
-        res.json(all);
-    } catch (error) {
-        res.status(500)
-        throw new Error('@listCategory ERROR: cannot find category');
-    }
+    const all = await Category.find({});
+    console.log(all)
+    res.json(all);
 }, "@listCategory ERROR: definition: ");
 
-const readCategory = asyncHandler(async (req, res) => {
-    try {
-        const category = await Category.findOne({ _id: req.params.id });
-        res.json(category);
-    } catch (error) {
-        res.status(500)
-        throw new Error('@readCategory ERROR: cannot find category');
-    }
+const readCategory = asyncHandler(async (req, res) => { 
+    const category = await Category.findOne({ _id: req.params.categoryId });
+    res.json(category);
 }, "@readCategory ERROR: definition: ");
 
 export {

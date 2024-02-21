@@ -10,10 +10,12 @@ import {
 
 import { userAuth, adminAuth } from "../middleware/authMiddleware.js";
 
-router.route("/").post(userAuth, adminAuth, createCategory);
-router.route("/:categoryId").put(userAuth, adminAuth, updateCategory);
-router.route("/:categoryId").delete(userAuth, adminAuth, removeCategory);
-router.route("/categories").get(listCategory);
-router.route("/:id").get(readCategory);
+router.route("/")
+  .post(userAuth, adminAuth, createCategory)
+  .get(listCategory);
+router.route("/:categoryId")
+  .put(userAuth, adminAuth, updateCategory)
+  .delete(userAuth, adminAuth, removeCategory)
+  .get(readCategory);
 
 export default router;
