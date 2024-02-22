@@ -127,12 +127,14 @@ const Navigation = () => {
                         <SidebarLink link='/' name='Home' icon={HiHome} ></SidebarLink>
                         <SidebarLink link="/shop" name="Shop" icon={HiShoppingBag} />
                         <SidebarLink link="/cart" name="Cart" icon={HiShoppingCart} />
+                        <SidebarLink link="/" name="Categories" icon={MdDashboard} />
+                        <SidebarLink link="/" name="Products" icon={MdCategory}/>
                         <SidebarLink link="/favourites" name="Favourites" icon={HiHeart} />
                         <SidebarLink link="/profile" name="Profile" icon={HiUser} />
                         <SidebarLink link="/settings" name="Settings" icon={HiOutlineAdjustments} />
                         <SidebarLink link="/admin/userlist" name="Users" icon={FaUsers} admin="yes" />
-                        <SidebarLink link="/" name="Categories" icon={MdDashboard} admin="yes" />
-                        <SidebarLink link="/" name="Products" icon={MdCategory} admin="yes" />
+                        <SidebarLink link="/admin/new-category" name="+ Category" icon={MdDashboard} admin="yes" />
+                        <SidebarLink link="/admin/new-product" name="+ Product" icon={MdCategory} admin="yes" />
                         <SidebarLink link="/" name="All Products" icon={FaVolleyballBall} admin="yes" />
                         <SidebarLink link="/" name="Update" icon={FaSyncAlt} admin="yes" />
                         <SidebarLink link="/" name="Orders" icon={FaListCheck} admin="yes" />

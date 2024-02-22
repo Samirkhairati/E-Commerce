@@ -1,50 +1,29 @@
-import path from "path";
-import express from "express";
-import multer from "multer";
+// uploadRoutes.js
+
+import express from 'express';
+import {upload} from '../middleware/fileUpload.js';
+import fs from 'fs';
+import { cloudinary } from '../config/cloudinary.js';
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-
-  filename: (req, file, cb) => {
-    const extname = path.extname(file.originalname);
-    cb(null, `${file.fieldname}-${Date.now()}${extname}`);
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  const filetypes = /jpe?g|png|webp/;
-  const mimetypes = /image\/jpe?g|image\/png|image\/webp/;
-
-  const extname = path.extname(file.originalname).toLowerCase();
-  const mimetype = file.mimetype;
-
-  if (filetypes.test(extname) && mimetypes.test(mimetype)) {
-    cb(null, true);
-  } else {
-    cb(new Error("Images only"), false);
+// POST route for handling file upload
+router.post('/', upload.single('file'), async (req, res) => {
+  try {
+    cloudinary.uploader.upload(req.file.path, (error, result) => {
+      if (error) {
+        fs.unlinkSync(req.file.path)
+        res.status(500).json({ error: "Couldn't Upload Image" });
+      } else {
+        fs.unlinkSync(req.file.path)
+        res.status(200).json({ url: result.secure_url });
+      }
+    })
+  } catch (error) {
+    throw new Error('@uploadFile ERROR: ' + error);
   }
-};
-
-const upload = multer({ storage, fileFilter });
-const uploadSingleImage = upload.single("image");
-
-router.post("/", (req, res) => {
-  uploadSingleImage(req, res, (err) => {
-    if (err) {
-      res.status(400).send({ message: err.message });
-    } else if (req.file) {
-      res.status(200).send({
-        message: "Image uploaded successfully",
-        image: `/${req.file.path}`,
-      });
-    } else {
-      res.status(400).send({ message: "No image file provided" });
-    }
-  });
 });
+
+router.get('/', (req, res) => { res.send(process.env.CLOUDINARY_CLOUD_NAME) });
 
 export default router;

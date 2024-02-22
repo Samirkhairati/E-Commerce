@@ -12,10 +12,12 @@ import categoryRoutes from './routes/categoryRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import uploadRoutes from "./routes/uploadRoutes.js";
 import orderRoutes from './routes/orderRoutes.js';
+import cloudinarySetup from './config/cloudinary.js';
 
 // SETUP
 dotenv.config();
 connectDB();
+cloudinarySetup();
 const app = express();
 const __dirname = path.resolve();
 
@@ -36,6 +38,7 @@ app.use("/api/category", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/upload", uploadRoutes);
 
 // BUILD
 app.use(express.static(path.join(__dirname, '/frontend/dist')));
