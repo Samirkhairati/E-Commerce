@@ -31,7 +31,7 @@ const createCategory = asyncHandler(async (req, res) => {
 
 
 const updateCategory = asyncHandler(async (req, res) => {
-    const { name } = req.body;
+    const { name, image } = req.body;
     const { categoryId } = req.params;
 
     const category = await Category.findOne({ _id: categoryId });
@@ -41,7 +41,8 @@ const updateCategory = asyncHandler(async (req, res) => {
         throw new Error('@updateCategory ERROR: Category does not exist');
     }
 
-    category.name = name;
+    category.name = name || category.name;
+    category.image = image || category.image;
 
     const updatedCategory = await category.save();
     res.json(updatedCategory);

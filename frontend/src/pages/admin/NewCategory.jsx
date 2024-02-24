@@ -2,75 +2,172 @@ import { BsCloudUpload } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import Loader from "../../components/Loader";
 import { useUploadFileMutation } from "../../actions/api/uploadApiSlice";
-import { useCreateCategoryMutation, useGetCategoriesQuery } from "../../actions/api/categoriesApiSlice";
+import {
+    useCreateCategoryMutation,
+    useGetCategoriesQuery,
+    useUpdateCategoryMutation,
+    useDeleteCategoryMutation
+} from "../../actions/api/categoriesApiSlice";
 import { toast } from "react-toastify";
 import CategoryRow from "../../components/CategoryRow";
 import Drawer from "../../components/Drawer";
+import { FaPlus } from "react-icons/fa";
 
 const NewCategory = () => {
 
     // GET Categories
     const { data: categories, refetch, isLoading: getIsLoading, getError } = useGetCategoriesQuery();
-    useEffect(() => {
-        refetch();
-    }, [refetch]);
 
     // CREATE Category 
-    const [createCategoryDrawer, toggleCreateCategoryDrawer] = useState(false);
-    const [createCategoryName, setcreateCategoryName] = useState('');
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [previewURL, setPreviewURL] = useState(null);
-    const [imageURL, setImageURL] = useState('https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png');
-    // const [fileIsLoading, setFileIsLoading] = useState(false);
+    const [createCategoryDrawer, toggleCreateCategoryDrawer] = useState(true);
+    const [createCategoryName, setCreateCategoryName] = useState('');
+    const [createSelectedFile, setCreateSelectedFile] = useState(null);
+    const [createPreviewURL, setCreatePreviewURL] = useState(null);
+    const [createImageURL, setCreateImageURL] = useState('https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png');
     const [uploadFile, { isLoading: fileIsLoading }] = useUploadFileMutation();
-    const [createCategory, { isLoading }] = useCreateCategoryMutation();
+    const [createCategory, { isLoading: createCategoryIsLoading }] = useCreateCategoryMutation();
 
-    // EDIT Category
-
-    // DELETE Category
-
-    const submitHandler = async (e) => {
+    const createCategorySubmit = async (e) => {
         e.preventDefault();
         try {
-            const result = await createCategory({ name: createCategoryName, image: imageURL }).unwrap();
+            const result = await createCategory({ name: createCategoryName, image: createImageURL }).unwrap();
             toast.success("Category created successfully: ");
             toggleCreateCategoryDrawer(!createCategoryDrawer);
+            setCreateSelectedFile(null);
+            setCreatePreviewURL(null);
+            setCreateCategoryName('');
+            refetch();
         } catch (error) {
             toast.error("Couldn't create category: " + error + error?.data?.message || error.error)
+            setCreateSelectedFile(null);
+            setCreatePreviewURL(null);
+            setCreateCategoryName('');
         }
     }
 
-    const handleFileChange = async (event) => {
+    const createCategoryFileChange = async (event) => {
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append("file", file);
         if (file) {
-            setSelectedFile(file);
+            setCreateSelectedFile(file);
             const reader = new FileReader();
             reader.onload = () => {
-                setPreviewURL(reader.result);
+                setCreatePreviewURL(reader.result);
             };
             reader.readAsDataURL(file);
             try {
+                setCreateImageURL(null)
                 const result = await uploadFile(formData).unwrap();
                 toast.success("Image uploaded successfully");
-                setImageURL(result.url);
+                setCreateImageURL(result.url);
             } catch (error) {
                 toast.error("Couldn't upload image: " + error?.data?.message || error.error);
+                setCreateSelectedFile(null);
+                setCreatePreviewURL(null);
+                setCreateCategoryName('');
             }
         } else {
-            setImageURL(null)
-            setSelectedFile(null);
-            setPreviewURL(null);
+            setCreateImageURL(null)
+            setCreateSelectedFile(null);
+            setCreatePreviewURL(null);
+            setCreateCategoryName('');
         }
     };
 
+    // EDIT Category
+    const [editCategoryId, setEditCategoryId] = useState(null);
+    const [editCategoryDrawer, toggleEditCategoryDrawer] = useState(true);
+    const [editCategoryName, setEditCategoryName] = useState('');
+    const [editSelectedFile, setEditSelectedFile] = useState(null);
+    const [editPreviewURL, setEditPreviewURL] = useState(null);
+    const [editImageURL, setEditImageURL] = useState('https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png');
+    const [editCategory, { isLoading: editCategoryIsLoading }] = useUpdateCategoryMutation();
+
+    const handleEditButtonClick = (categoryId) => {
+        toggleEditCategoryDrawer(!editCategoryDrawer);
+        setEditCategoryId(categoryId);
+    };
+
+    const editCategorySubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const result = await editCategory(
+                {
+                    categoryId: editCategoryId,
+                    name: editCategoryName,
+                    image: editImageURL
+                }
+            ).unwrap();
+            toast.success("Category updated successfully: ");
+            toggleEditCategoryDrawer(!editCategoryDrawer);
+            setEditSelectedFile(null);
+            setEditPreviewURL(null);
+            setEditCategoryName('');
+            refetch();
+
+        } catch (error) {
+            toast.error("Couldn't update category: " + error + error?.data?.message || error.error || JSON.stringify(error))
+            setEditSelectedFile(null);
+            setEditPreviewURL(null);
+            setEditCategoryName('');
+        }
+    }
+    const editCategoryFileChange = async (event) => {
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        if (file) {
+            setEditSelectedFile(file);
+            const reader = new FileReader();
+            reader.onload = () => {
+                setEditPreviewURL(reader.result);
+            };
+            reader.readAsDataURL(file);
+            try {
+                setEditImageURL(null)
+                const result = await uploadFile(formData).unwrap();
+                toast.success("Image uploaded successfully");
+                setEditImageURL(result.url);
+            } catch (error) {
+                toast.error("Couldn't update image: " + error?.data?.message || error.error);
+                setEditSelectedFile(null);
+                setEditPreviewURL(null);
+                setEditCategoryName('');
+            }
+        } else {
+            setEditImageURL(null)
+            setEditSelectedFile(null);
+            setEditPreviewURL(null);
+            setEditCategoryName('');
+        }
+    };
+
+    // DELETE Category
+    const [deleteCategory, { isLoading: deleteCategoryIsLoading }] = useDeleteCategoryMutation();
+
+    const handleDeleteButtonClick = (categoryId) => {
+        if (confirm(`Are you sure you want to delete this category: ${categoryId}`)) {
+            deleteCategorySubmit(categoryId);
+        };
+    };
+    const deleteCategorySubmit = async (categoryId) => {
+        try {
+            const result = await deleteCategory(categoryId).unwrap();
+            toast.success("Category deleted successfully: ");
+            refetch();
+        } catch (error) {
+            toast.error("Couldn't delete category: " + error + error?.data?.message || error.error)
+        }
+    }
+
+    // GLOBAL
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
+
     return (
         <>
-
-
-
-
 
             {getIsLoading ? <div className="text-white">
                 <div className="w-full h-96 flex items-center justify-center">
@@ -84,26 +181,26 @@ const NewCategory = () => {
                 : getError ? <div>{toast.error(JSON.stringify(error.data))}</div>
                     :
 
-                    <>  
-                        <Drawer open={createCategoryDrawer} drawerClose={() => {toggleCreateCategoryDrawer(!createCategoryDrawer) }}>
+                    <>
+                        <Drawer open={createCategoryDrawer} drawerClose={() => { toggleCreateCategoryDrawer(!createCategoryDrawer) }}>
                             <section className="container w-full mx-auto flex items-center justify-center py-32">
-                                <form onSubmit={submitHandler}>
+                                <form onSubmit={createCategorySubmit}>
 
                                     <div className="max-w-sm mx-aut shadow-md overflow-hidden items-center border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-800  dark:border-gray-600 dark:hover:border-gray-500 ">
                                         <div className="px-4 py-4">
                                             <h3 className="mt-4 mb-6 flex justify-center text-xl font-semibold dark:text-white">New Category</h3>
 
                                             <input type="text" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder={"Category Name"} value={createCategoryName} onChange={(e) => { setcreateCategoryName(e.target.value) }} />
+                                                placeholder={"Category Name"} value={createCategoryName} onChange={(e) => { setCreateCategoryName(e.target.value) }} />
 
                                             <div id="image-preview" className="max-w-sm p-6 mb-4 bg-gray-100 dark:bg-gray-700 border-dashed border-2 border-gray-400 rounded-lg items-center mx-auto text-center cursor-pointer ">
 
                                                 {
-                                                    selectedFile
-                                                        ? <img src={previewURL} className="max-h-48 rounded-lg mx-auto" alt="Image preview" />
+                                                    createSelectedFile
+                                                        ? <img src={createPreviewURL} className="max-h-48 rounded-lg mx-auto" alt="Image preview" />
                                                         : <>
-                                                            <input onChange={handleFileChange} id="upload" type="file" className="hidden" accept="image/*" name="file" />
-                                                            <label htmlFor="upload" className="cursor-pointer">
+                                                            <input onChange={createCategoryFileChange} id="uploadCreate" type="file" className="hidden" accept="image/*" name="file" />
+                                                            <label htmlFor="uploadCreate" className="cursor-pointer">
                                                                 <BsCloudUpload className="w-8 h-8 text-blue-200 mx-auto mb-4" />
                                                                 <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-200">Upload picture</h5>
                                                                 <p className="font-normal text-sm text-gray-400 md:px-6">Choose photo size should be less than <b className="text-blue-200">2mb</b></p>
@@ -113,9 +210,50 @@ const NewCategory = () => {
                                                 }
                                             </div>
                                             <div className="flex items-center justify-center">
-                                                <button disabled={fileIsLoading || isLoading} type="submit" className="w-full">
+                                                <button disabled={fileIsLoading || createCategoryIsLoading} type="submit" className="w-full">
                                                     <label className="w-full text-white bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center justify-center mr-2 cursor-pointer">
-                                                        <span className="text-center ml-2">{(fileIsLoading || isLoading) && <Loader></Loader>}Create Category</span>
+                                                        <span className="text-center ml-2">{(fileIsLoading || createCategoryIsLoading) && <Loader></Loader>}Create Category</span>
+                                                    </label>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </section>
+                        </Drawer>
+
+                        <Drawer open={editCategoryDrawer} drawerClose={() => { toggleEditCategoryDrawer(!editCategoryDrawer) }}>
+                            <section className="container w-full mx-auto flex items-center justify-center py-32">
+                                <form onSubmit={editCategorySubmit}>
+
+                                    <div className="max-w-sm mx-aut shadow-md overflow-hidden items-center border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-800  dark:border-gray-600 dark:hover:border-gray-500 ">
+                                        <div className="px-4 py-4">
+                                            <h3 className="mt-4 mb-6 flex justify-center text-xl font-semibold dark:text-white">Edit Category</h3>
+
+                                            <input type="text" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Category Name"} value={editCategoryName} onChange={(e) => { setEditCategoryName(e.target.value) }} />
+
+                                            <div id="image-preview" className="max-w-sm p-6 mb-4 bg-gray-100 dark:bg-gray-700 border-dashed border-2 border-gray-400 rounded-lg items-center mx-auto text-center cursor-pointer ">
+
+                                                {
+                                                    editSelectedFile
+                                                        ? <img src={editPreviewURL} className="max-h-48 rounded-lg mx-auto" alt="Image preview" />
+                                                        : <>
+                                                            <input onChange={editCategoryFileChange} id="uploadEdit" type="file" className="hidden" accept="image/*" name="file" />
+                                                            <label htmlFor="uploadEdit" className="cursor-pointer">
+                                                                <BsCloudUpload className="w-8 h-8 text-blue-200 mx-auto mb-4" />
+                                                                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-200">Upload picture</h5>
+                                                                <p className="font-normal text-sm text-gray-400 md:px-6">Choose photo size should be less than <b className="text-blue-200">2mb</b></p>
+                                                                <p className="font-normal text-sm text-gray-400 md:px-6">and should be in <b className="text-blue-200">JPG, PNG, or GIF</b> format.</p>
+                                                            </label>
+                                                        </>
+                                                }
+                                            </div>
+                                            <div className="flex items-center justify-center">
+                                                <button disabled={fileIsLoading || editCategoryIsLoading} type="submit" className="w-full">
+                                                    <label className="w-full text-white bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center justify-center mr-2 cursor-pointer">
+                                                        <span className="text-center ml-2">{(fileIsLoading || editCategoryIsLoading) && <Loader></Loader>}Save Category</span>
                                                     </label>
                                                 </button>
                                             </div>
@@ -130,7 +268,13 @@ const NewCategory = () => {
                                 <tr>
                                     <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">No.</th>
                                     <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Category</th>
-                                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Actions</th>
+                                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400 relative">Actions
+                                        <button onClick={() => { toggleCreateCategoryDrawer(!createCategoryDrawer) }} type="button"
+                                            className={`absolute bg-blue-500 text-white left-[100px] top-1.5 inline-flex items-center rounded-lg px-3 py-2 text-center text-sm font-medium   focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900`}>
+                                            <FaPlus className="mr-2 h-4 w-4" />
+                                            New category
+                                        </button>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
@@ -139,7 +283,7 @@ const NewCategory = () => {
                                         <CategoryRow
                                             editButton={() => handleEditButtonClick(category._id)}
                                             deleteButton={() => handleDeleteButtonClick(category._id)}
-                                            no={index + 1} username={category.name} image={category.image} key={index} />
+                                            no={index + 1} name={category.name} image={category.image} key={index} />
                                     );
                                 })}
                             </tbody>

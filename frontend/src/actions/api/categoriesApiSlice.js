@@ -26,6 +26,7 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
         url: `${CATEGORY_URL}/${data}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Category"],
     }),
 
     getCategories: builder.query({
