@@ -8,6 +8,8 @@ const categorySchema = new mongoose.Schema({
     maxLength: 32,
     unique: true,
   },
+  image: {type: String},
 });
 
-export default mongoose.model("Category", categorySchema);
+const Category = mongoose.model("Category", categorySchema);
+export default Category;

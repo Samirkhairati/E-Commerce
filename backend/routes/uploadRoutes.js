@@ -7,6 +7,11 @@ import uploadController from '../controllers/uploadController.js';
 const router = express.Router();
 
 // POST route for handling file upload
-router.post('/', upload.single('file'), uploadController);
+
+router.route('/')
+    .post(upload.single('file'), uploadController)
+    .get((req, res) => {
+        res.json({message: "GET request to /api/upload"})
+    });
 
 export default router;

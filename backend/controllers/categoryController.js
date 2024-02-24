@@ -2,23 +2,33 @@ import Category from "../models/categoryModel.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 
 const createCategory = asyncHandler(async (req, res) => {
-    const { name } = req.body;
+    const { name, image } = req.body;
 
     if (!name) {
         res.status(400);
         throw new Error('@createCategory ERROR: Name is required');
     }
-
+    if (!image) {
+        res.status(400);
+        throw new Error('@createCategory ERROR: Image is required');
+        //image = 'https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png'
+    }
     const existingCategory = await Category.findOne({ name });
-
     if (existingCategory) {
         res.status(400);
         throw new Error('@createCategory ERROR: Category already exists');
     }
-
-    const category = await new Category({ name }).save();
-    res.json(category);
+    console.log(name, image)
+    const category = new Category({ name, image });
+    try {
+        const newCategory = await category.save();
+        res.status(201).json(newCategory); 
+    } catch (error) {
+        throw new Error('@createCategory ERROR: Category could not be created');
+    }
 }, "@createCategory ERROR: definition: ");
+
+
 
 const updateCategory = asyncHandler(async (req, res) => {
     const { name } = req.body;

@@ -25,11 +25,15 @@ router.route('/logout').post(logoutUser)
 router.route('/profile')
     .put(userAuth, updateCurrentUserProfile)
     .get(userAuth, getCurrentUserProfile)
-    
+
 
 router.route('/:id')
     .delete(userAuth, adminAuth, deleteUserById)
     .get(userAuth, adminAuth, getUserById)
     .put(userAuth, adminAuth, updateUserById)
+
+router.route('/upload')
+    .put(userAuth, updateCurrentUserProfile)
+    .get(userAuth, getCurrentUserProfile)
 
 export default router;
