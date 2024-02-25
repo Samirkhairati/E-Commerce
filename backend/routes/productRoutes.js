@@ -6,7 +6,7 @@ import {
   addProduct,
   updateProductDetails,
   removeProduct,
-  fetchProducts, //search
+  searchProducts, //search
   fetchProductById,
   fetchAllProducts,
   addProductReview,
@@ -18,10 +18,10 @@ import { userAuth, adminAuth } from "../middleware/authMiddleware.js";
 import checkId from "../middleware/checkId.js";
 
 router.route("/")
-  .get(fetchProducts)
+  .get(searchProducts)
   .post(userAuth, adminAuth, addProduct);
 
-router.route("/allproducts").get(fetchAllProducts);
+router.route("/all").get(fetchAllProducts);
 router.route("/:id/reviews").post(userAuth, checkId, addProductReview);
 
 router.get("/top", fetchTopProducts);
