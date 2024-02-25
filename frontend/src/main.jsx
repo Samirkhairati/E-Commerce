@@ -12,17 +12,21 @@ import {
   createBrowserRouter,
   Router
 } from 'react-router-dom'
+import { useSelector } from "react-redux";
 
-
+// PUBLIC 
 import { SignIn } from './pages/auth/SignIn.jsx';
 import { SignUp } from './pages/auth/SignUp.jsx';
+import Categories from './pages/public/Categories.jsx';
 
+// PRIVATE
 import PrivateRoute from './pages/private/PrivateRoute.jsx';
 import Profile from './pages/private/Profile.jsx';
 
+// ADMIN
 import AdminRoute from './pages/admin/AdminRoute.jsx';
 import UserList from './pages/admin/UserList.jsx';
-import NewCategory from './pages/admin/NewCategory.jsx';
+import CategoryList from './pages/admin/CategoryList.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,18 +38,19 @@ const router = createBrowserRouter(
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/shop" element={<Shop />} /> */}
+      <Route path="/categories" element={<Categories />} />
 
       {/* Registered users */}
-      <Route path="" element={<PrivateRoute />}>
-        <Route path="/profile" element={<Profile />} />
+      <Route path="me" element={<PrivateRoute />}>
+        <Route path="profile" element={<Profile />} />
         {/* <Route path="/shipping" element={<Shipping />} />
         <Route path="/placeorder" element={<PlaceOrder />} />
         <Route path="/order/:id" element={<Order />} /> */}
       </Route>
 
-      <Route path="/admin" element={<AdminRoute />}>
-        <Route path="userlist" element={<UserList />} />
-        <Route path="new-category" element={<NewCategory />} />
+      <Route path="admin" element={<AdminRoute />}>
+        <Route path="users" element={<UserList />} />
+        <Route path="category" element={<CategoryList />} />
         {/* <Route path="productlist" element={<ProductList />} />
         <Route path="allproductslist" element={<AllProducts />} />
         <Route path="productlist/:pageNumber" element={<ProductList />} />
