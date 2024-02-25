@@ -17,7 +17,8 @@ import { useSelector } from "react-redux";
 // PUBLIC 
 import { SignIn } from './pages/auth/SignIn.jsx';
 import { SignUp } from './pages/auth/SignUp.jsx';
-import Categories from './pages/public/Categories.jsx';
+import Categories from './pages/public/Categories.jsx'
+import Shop from './pages/public/Shop.jsx';
 
 // PRIVATE
 import PrivateRoute from './pages/private/PrivateRoute.jsx';
@@ -36,8 +37,8 @@ const router = createBrowserRouter(
       {/* <Route index={true} path="/" element={<Home />} /> */}
       {/* <Route path="/favorite" element={<Favorites />} />
       <Route path="/product/:id" element={<ProductDetails />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/shop" element={<Shop />} /> */}
+      <Route path="/cart" element={<Cart />} /> */}
+      <Route path="/shop" element={<Shop />} />
       <Route path="/categories" element={<Categories />} />
 
       {/* Registered users */}
