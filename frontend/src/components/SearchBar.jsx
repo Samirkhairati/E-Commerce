@@ -1,6 +1,8 @@
 import { IoSearchOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
-
+import { FaStar } from "react-icons/fa6";
+import { MdLeaderboard } from "react-icons/md";
+import { RiPlantFill } from "react-icons/ri";
 const SearchBar = () => {
     return (
         <>
@@ -19,15 +21,15 @@ const SearchBar = () => {
                 </form>
 
                 <Link type="button" className="m-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-4 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <IoSearchOutline className="w-3.5 h-3.5 me-2" />
+                    <MdLeaderboard className="w-3.5 h-3.5 me-2" />
                     Top
                 </Link>
                 <Link type="button" className="m-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-4 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <IoSearchOutline className="w-3.5 h-3.5 me-2" />
+                    <FaStar className="w-3.5 h-3.5 me-2" />
                     Best
                 </Link>
                 <Link type="button" className="m-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-4 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <IoSearchOutline className="w-3.5 h-3.5 me-2" />
+                    <RiPlantFill className="w-3.5 h-3.5 me-2" />
                     New
                 </Link>
             </div>

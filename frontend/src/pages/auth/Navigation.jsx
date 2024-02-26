@@ -128,15 +128,10 @@ const Navigation = () => {
                         <SidebarLink link="/shop" name="Shop" icon={HiShoppingBag} />
                         <SidebarLink link="/cart" name="Cart" icon={HiShoppingCart} />
                         <SidebarLink link="/categories" name="Categories" icon={MdDashboard} />
-                        <SidebarLink link="/" name="Products" icon={MdCategory}/>
-                        <SidebarLink link="/favourites" name="Favourites" icon={HiHeart} />
                         <SidebarLink link="/me/profile" name="Profile" icon={HiUser} />
-                        <SidebarLink link="/settings" name="Settings" icon={HiOutlineAdjustments} />
                         <SidebarLink link="/admin/users" name="Users" icon={FaUsers} admin="yes" />
                         <SidebarLink link="/admin/category" name="+ Category" icon={MdDashboard} admin="yes" />
                         <SidebarLink link="/admin/products" name="+ Product" icon={MdCategory} admin="yes" />
-                        <SidebarLink link="/" name="All Products" icon={FaVolleyballBall} admin="yes" />
-                        <SidebarLink link="/" name="Update" icon={FaSyncAlt} admin="yes" />
                         <SidebarLink link="/" name="Orders" icon={FaListCheck} admin="yes" />
                         <li>
                             <div className=" flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-blue-500 dark:bg-blue-600 group">
