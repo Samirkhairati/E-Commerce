@@ -6,32 +6,22 @@ import {
   addProduct,
   updateProductDetails,
   removeProduct,
-  searchProducts, //search
+  searchProducts,
   fetchProductById,
   fetchAllProducts,
-  addProductReview,
-  fetchTopProducts,
-  fetchNewProducts,
-  filterProducts,
 } from "../controllers/productController.js";
 import { userAuth, adminAuth } from "../middleware/authMiddleware.js";
-import checkId from "../middleware/checkId.js";
 
 router.route("/")
   .get(searchProducts)
   .post(userAuth, adminAuth, addProduct);
 
 router.route("/all").get(fetchAllProducts);
-router.route("/:id/reviews").post(userAuth, checkId, addProductReview);
-
-router.get("/top", fetchTopProducts);
-router.get("/new", fetchNewProducts);
 
 router.route("/:id")
   .get(fetchProductById)
   .put(userAuth, adminAuth, updateProductDetails)
   .delete(userAuth, adminAuth, removeProduct);
 
-router.route("/filtered-products").post(filterProducts);
 
 export default router;

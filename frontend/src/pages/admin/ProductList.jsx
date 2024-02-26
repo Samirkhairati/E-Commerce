@@ -4,10 +4,11 @@ import Loader from "../../components/Loader";
 import { useUploadFileMutation } from "../../actions/api/uploadApiSlice";
 import {
     useCreateProductMutation,
-    useGetProductsQuery,
+    useGetAllProductsQuery,
     useUpdateProductMutation,
     useDeleteProductMutation
 } from "../../actions/api/productsApiSlice";
+import { useGetCategoriesQuery, } from "../../actions/api/categoriesApiSlice";
 import { toast } from "react-toastify";
 import ProductRow from "../../components/ProductRow";
 import Drawer from "../../components/Drawer";
@@ -16,32 +17,54 @@ import { FaPlus } from "react-icons/fa";
 const NewProduct = () => {
 
     // GET Products
-    const { data: products, refetch, isLoading: getIsLoading, getError } = useGetProductsQuery();
-
+    const { data: products, refetch, isLoading: getIsLoading, getError } = useGetAllProductsQuery();
+    const { data: categories } = useGetCategoriesQuery()
     // CREATE Product 
     const [createProductDrawer, toggleCreateProductDrawer] = useState(true);
     const [createProductName, setCreateProductName] = useState('');
+    const [createProductDescription, setCreateProductDescription] = useState('');
+    const [createProductPrice, setCreateProductPrice] = useState();
+    const [createProductDiscount, setCreateProductDiscount] = useState();
+    const [createProductStock, setCreateProductStock] = useState();
+    const [createProductCategory, setCreateProductCategory] = useState('');
     const [createSelectedFile, setCreateSelectedFile] = useState(null);
     const [createPreviewURL, setCreatePreviewURL] = useState(null);
     const [createImageURL, setCreateImageURL] = useState('https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png');
     const [uploadFile, { isLoading: fileIsLoading }] = useUploadFileMutation();
     const [createProduct, { isLoading: createProductIsLoading }] = useCreateProductMutation();
 
+    function resetCreateProduct() {
+        setCreateProductName('');
+        setCreateProductDescription('');
+        setCreateProductPrice('');
+        setCreateProductDiscount('');
+        setCreateProductStock('');
+        setCreateProductCategory('');
+        setCreateSelectedFile(null);
+        setCreatePreviewURL(null);
+        setCreateImageURL('https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png');
+    }
+
     const createProductSubmit = async (e) => {
         e.preventDefault();
         try {
-            const result = await createProduct({ name: createProductName, image: createImageURL }).unwrap();
+            const result = await createProduct(
+                {
+                    name: createProductName,
+                    description: createProductDescription,
+                    price: createProductPrice,
+                    discount: createProductDiscount,
+                    count: createProductStock,
+                    category: createProductCategory,
+                    image: createImageURL
+                }).unwrap();
             toast.success("Product created successfully: ");
             toggleCreateProductDrawer(!createProductDrawer);
-            setCreateSelectedFile(null);
-            setCreatePreviewURL(null);
-            setCreateProductName('');
+            resetCreateProduct();
             refetch();
         } catch (error) {
             toast.error("Couldn't create product: " + error + error?.data?.message || error.error)
-            setCreateSelectedFile(null);
-            setCreatePreviewURL(null);
-            setCreateProductName('');
+            resetCreateProduct();
         }
     }
 
@@ -63,15 +86,10 @@ const NewProduct = () => {
                 setCreateImageURL(result.url);
             } catch (error) {
                 toast.error("Couldn't upload image: " + error?.data?.message || error.error);
-                setCreateSelectedFile(null);
-                setCreatePreviewURL(null);
-                setCreateProductName('');
+                resetCreateProduct
             }
         } else {
-            setCreateImageURL(null)
-            setCreateSelectedFile(null);
-            setCreatePreviewURL(null);
-            setCreateProductName('');
+            resetCreateProduct();
         }
     };
 
@@ -79,10 +97,27 @@ const NewProduct = () => {
     const [editProductId, setEditProductId] = useState(null);
     const [editProductDrawer, toggleEditProductDrawer] = useState(true);
     const [editProductName, setEditProductName] = useState('');
+    const [editProductDescription, setEditProductDescription] = useState('');
+    const [editProductPrice, setEditProductPrice] = useState();
+    const [editProductDiscount, setEditProductDiscount] = useState();
+    const [editProductStock, setEditProductStock] = useState();
+    const [editProductCategory, setEditProductCategory] = useState('');
     const [editSelectedFile, setEditSelectedFile] = useState(null);
     const [editPreviewURL, setEditPreviewURL] = useState(null);
     const [editImageURL, setEditImageURL] = useState('https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png');
     const [editProduct, { isLoading: editProductIsLoading }] = useUpdateProductMutation();
+
+    function resetEditProduct() {
+        setEditProductName('');
+        setEditProductDescription('');
+        setEditProductPrice('');
+        setEditProductDiscount('');
+        setEditProductStock('');
+        setEditProductCategory('');
+        setEditSelectedFile(null);
+        setEditPreviewURL(null);
+        setEditImageURL('https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png');
+    }
 
     const handleEditButtonClick = (productId) => {
         toggleEditProductDrawer(!editProductDrawer);
@@ -96,23 +131,25 @@ const NewProduct = () => {
                 {
                     productId: editProductId,
                     name: editProductName,
-                    image: editImageURL
+                    image: editImageURL,
+                    description: editProductDescription,
+                    price: editProductPrice,
+                    discount: editProductDiscount,
+                    count: editProductStock,
+                    category: editProductCategory
                 }
             ).unwrap();
             toast.success("Product updated successfully: ");
             toggleEditProductDrawer(!editProductDrawer);
-            setEditSelectedFile(null);
-            setEditPreviewURL(null);
-            setEditProductName('');
+            resetEditProduct();
             refetch();
 
         } catch (error) {
             toast.error("Couldn't update product: " + error + error?.data?.message || error.error || JSON.stringify(error))
-            setEditSelectedFile(null);
-            setEditPreviewURL(null);
-            setEditProductName('');
+            resetEditProduct();
         }
     }
+    
     const editProductFileChange = async (event) => {
         const file = event.target.files[0];
         const formData = new FormData();
@@ -131,15 +168,10 @@ const NewProduct = () => {
                 setEditImageURL(result.url);
             } catch (error) {
                 toast.error("Couldn't update image: " + error?.data?.message || error.error);
-                setEditSelectedFile(null);
-                setEditPreviewURL(null);
-                setEditProductName('');
+                resetEditProduct();
             }
         } else {
-            setEditImageURL(null)
-            setEditSelectedFile(null);
-            setEditPreviewURL(null);
-            setEditProductName('');
+            resetEditProduct();
         }
     };
 
@@ -161,7 +193,7 @@ const NewProduct = () => {
         }
     }
 
-    // GLOBAL
+    // Updating the list
     useEffect(() => {
         refetch();
     }, [refetch]);
@@ -183,7 +215,7 @@ const NewProduct = () => {
 
                     <>
                         <Drawer open={createProductDrawer} drawerClose={() => { toggleCreateProductDrawer(!createProductDrawer) }}>
-                            <section className="container w-full mx-auto flex items-center justify-center py-32">
+                            <section className="container w-full mx-auto flex justify-center">
                                 <form onSubmit={createProductSubmit}>
 
                                     <div className="max-w-sm mx-aut shadow-md overflow-hidden items-center border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-800  dark:border-gray-600 dark:hover:border-gray-500 ">
@@ -192,6 +224,25 @@ const NewProduct = () => {
 
                                             <input type="text" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder={"Product Name"} value={createProductName} onChange={(e) => { setCreateProductName(e.target.value) }} />
+                                            <input type="text" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Product Description"} value={createProductDescription} onChange={(e) => { setCreateProductDescription(e.target.value) }} />
+                                            <input type="number" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Price ₹"} value={createProductPrice} onChange={(e) => { setCreateProductPrice(e.target.value) }} />
+                                            <input type="number" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Discount (0-100)%"} value={createProductDiscount} onChange={(e) => { setCreateProductDiscount(e.target.value) }} />
+                                            <input type="number" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Count in Stock"} value={createProductStock} onChange={(e) => { setCreateProductStock(e.target.value) }} />
+
+                                            <select name="name" id="name" className="pr-3 my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Category"} value={createProductCategory} onChange={(e) => { setCreateProductCategory(e.target.value) }} >
+
+                                                {categories.map((category) => {
+                                                    return (
+                                                        <option value={category._id}>{category.name}</option>
+                                                    );
+                                                })}
+
+                                            </select>
 
                                             <div id="image-preview" className="max-w-sm p-6 mb-4 bg-gray-100 dark:bg-gray-700 border-dashed border-2 border-gray-400 rounded-lg items-center mx-auto text-center cursor-pointer ">
 
@@ -224,15 +275,34 @@ const NewProduct = () => {
                         </Drawer>
 
                         <Drawer open={editProductDrawer} drawerClose={() => { toggleEditProductDrawer(!editProductDrawer) }}>
-                            <section className="container w-full mx-auto flex items-center justify-center py-32">
+                            <section className="container w-full mx-auto flex justify-center">
                                 <form onSubmit={editProductSubmit}>
 
                                     <div className="max-w-sm mx-aut shadow-md overflow-hidden items-center border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-800  dark:border-gray-600 dark:hover:border-gray-500 ">
                                         <div className="px-4 py-4">
-                                            <h3 className="mt-4 mb-6 flex justify-center text-xl font-semibold dark:text-white">Edit Product</h3>
+                                            <h3 className="mt-4 mb-6 flex justify-center text-xl font-semibold dark:text-white">New Product</h3>
 
                                             <input type="text" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder={"Product Name"} value={editProductName} onChange={(e) => { setEditProductName(e.target.value) }} />
+                                            <input type="text" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Product Description"} value={editProductDescription} onChange={(e) => { setEditProductDescription(e.target.value) }} />
+                                            <input type="number" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Price ₹"} value={editProductPrice} onChange={(e) => { setEditProductPrice(e.target.value) }} />
+                                            <input type="number" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Discount (0-100)%"} value={editProductDiscount} onChange={(e) => { setEditProductDiscount(e.target.value) }} />
+                                            <input type="number" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Count in Stock"} value={editProductStock} onChange={(e) => { setEditProductStock(e.target.value) }} />
+
+                                            <select name="name" id="name" className="pr-3 my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder={"Category"} value={editProductCategory} onChange={(e) => { setEditProductCategory(e.target.value) }} >
+
+                                                {categories.map((category) => {
+                                                    return (
+                                                        <option value={category._id}>{category.name}</option>
+                                                    );
+                                                })}
+
+                                            </select>
 
                                             <div id="image-preview" className="max-w-sm p-6 mb-4 bg-gray-100 dark:bg-gray-700 border-dashed border-2 border-gray-400 rounded-lg items-center mx-auto text-center cursor-pointer ">
 
@@ -253,7 +323,7 @@ const NewProduct = () => {
                                             <div className="flex items-center justify-center">
                                                 <button disabled={fileIsLoading || editProductIsLoading} type="submit" className="w-full">
                                                     <label className="w-full text-white bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center justify-center mr-2 cursor-pointer">
-                                                        <span className="text-center ml-2">{(fileIsLoading || editProductIsLoading) && <Loader></Loader>}Save Product</span>
+                                                        <span className="text-center ml-2">{(fileIsLoading || editProductIsLoading) && <Loader></Loader>}Edit Product</span>
                                                     </label>
                                                 </button>
                                             </div>
@@ -263,11 +333,18 @@ const NewProduct = () => {
 
                             </section>
                         </Drawer>
+
                         <table className="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-600">
                             <thead className="bg-gray-100 dark:bg-gray-700">
                                 <tr>
                                     <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">No.</th>
                                     <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Product</th>
+                                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Category</th>
+                                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">ID</th>
+                                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">CP</th>
+                                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">SP</th>
+                                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Stock</th>
+                                    <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Sold</th>
                                     <th scope="col" className="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400 relative">Actions
                                         <button onClick={() => { toggleCreateProductDrawer(!createProductDrawer) }} type="button"
                                             className={`absolute bg-blue-500 text-white left-[100px] top-1.5 inline-flex items-center rounded-lg px-3 py-2 text-center text-sm font-medium   focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900`}>
@@ -283,7 +360,18 @@ const NewProduct = () => {
                                         <ProductRow
                                             editButton={() => handleEditButtonClick(product._id)}
                                             deleteButton={() => handleDeleteButtonClick(product._id)}
-                                            no={index + 1} name={product.name} image={product.image} key={index} />
+                                            no={index + 1}
+                                            name={product.name}
+                                            category={product.category.name}
+                                            productId={product._id}
+                                            price={product.price}
+                                            discount={product.discount}
+                                            stock={product.count}
+                                            sold={product.sold}
+                                            image={product.image}
+                                            key={index}
+
+                                        />
                                     );
                                 })}
                             </tbody>
