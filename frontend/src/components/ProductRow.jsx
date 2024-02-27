@@ -1,4 +1,6 @@
 import { FaRegEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
 
 const UserRow = (props) => {
     return (
@@ -7,7 +9,7 @@ const UserRow = (props) => {
             <td className="mr-12 flex items-center space-x-6 whitespace-nowrap p-4">
                 <img className="h-10 w-10 rounded-full object-cover" src={`${props.image || 'https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png'}`} alt="" />
                 <div className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                    <div className="text-base font-semibold text-gray-900 dark:text-white">{props.name}</div>
+                    <Link to={`/product/${props.productId}`} className="text-base font-semibold text-gray-900 dark:text-white hover:underline">{props.name}</Link>
                 </div>
             </td>
             <td className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-slate-500 bg-slate font-mono text-sm ">{props.category}</td>
