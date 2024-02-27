@@ -20,6 +20,7 @@ import { SignUp } from './pages/auth/SignUp.jsx';
 import Categories from './pages/public/Categories.jsx'
 import Shop from './pages/public/Shop.jsx';
 import ProductDetails from './pages/public/ProductDetails.jsx';
+import Home from './pages/public/Home.jsx';
 
 // PRIVATE
 import PrivateRoute from './pages/private/PrivateRoute.jsx';
@@ -36,7 +37,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route path="/login" element={<SignIn />} />
       <Route path="/register" element={<SignUp />} />
-      {/* <Route index={true} path="/" element={<Home />} /> */}
+      <Route index={true} path="/" element={<Home />} />
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/categories" element={<Categories />} />

@@ -69,7 +69,7 @@ const UserList = () => {
                 <>
                     <Drawer open={editUserDrawer} drawerClose={() => { toggleEditUserDrawer(!editUserDrawer) }} >
                         <div className="p-4 w-4/5 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-                            <h3 className="mb-4 text-xl font-semibold dark:text-white">Edit Profile</h3>
+                            <h3 className="mb-4 text-xl font-semibold dark:text-white text-black">Edit Profile</h3>
                             <form onSubmit={(e) => { e.preventDefault(); updateHandler(editableUserId) }} action="#">
                                 <div className="flex flex-col space-y-6">
                                     <div className="">

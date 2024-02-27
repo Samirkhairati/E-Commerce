@@ -47,20 +47,20 @@ const Profile = () => {
             <section className="h-full flex items-center justify-center bg-gray-50 dark:bg-gray-900">
 
                 <div className="p-4 w-4/5 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-                    <h3 className="mb-4 text-xl font-semibold dark:text-white">Edit Profile</h3>
+                    <h3 className="mb-4 text-xl font-semibold dark:text-white text-black">Edit Profile</h3>
                     <form onSubmit={submitHandler} action="#">
                         <div className="grid grid-cols-6 gap-6">
-                            <div className="col-span-6 sm:col-span-3">
+                            <div className="col-span-6">
                                 <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                                 <input type="text" name="username" id="name" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder={"username"} value={username} onChange={(e) => setUserName(e.target.value)} />
                             </div>
-                            <div className="col-span-6 sm:col-span-3">
+                            <div className="col-span-6">
                                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Address</label>
                                 <input type="email" name="email" id="email" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder={"email"} value={email} onChange={(e) => setEmail(e.target.value)} />
                             </div>
-                            <div className="col-span-6 sm:col-span-3">
+                            <div className="col-span-6">
                                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                 <input type="password" name="password" id="password" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="***********" value={password} onChange={(e) => setPassword(e.target.value)} />

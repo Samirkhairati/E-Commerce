@@ -59,7 +59,7 @@ const Navigation = () => {
                             </button>
                             <Link to="/" className="flex ms-2 md:me-24">
                                 <img src="/logo.svg" className="h-8 me-3" alt="FlowBite Logo" />
-                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Store</span>
+                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white text-black">Store</span>
                             </Link>
                         </div>
                         <div className="flex items-center text-slate-300">
