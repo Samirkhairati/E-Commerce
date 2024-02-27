@@ -5,7 +5,7 @@ const UserRow = (props) => {
         <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
             <td className="whitespace-nowrap p-4 font-medium text-gray-900 dark:text-slate-500 bg-slate font-mono text-sm ">{props.no}</td>
             <td className="mr-12 flex items-center space-x-6 whitespace-nowrap p-4">
-                <img className="h-10 w-10 rounded-full" src={`${props.image || 'https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png'}`} alt="" />
+                <img className="h-10 w-10 rounded-full object-cover object-right" src={`${props.image || 'https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png'}`} alt="" />
                 <div className="text-sm font-normal text-gray-500 dark:text-gray-400">
                     <div className="text-base font-semibold text-gray-900 dark:text-white">{props.name}</div>
                 </div>

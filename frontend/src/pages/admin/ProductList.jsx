@@ -220,7 +220,7 @@ const NewProduct = () => {
 
                                     <div className="max-w-sm mx-aut shadow-md overflow-hidden items-center border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-800  dark:border-gray-600 dark:hover:border-gray-500 ">
                                         <div className="px-4 py-4">
-                                            <h3 className="mt-4 mb-6 flex justify-center text-xl font-semibold dark:text-white">New Product</h3>
+                                            <h3 className="mt-4 mb-6 flex justify-center text-xl font-semibold dark:text-white text-black">New Product</h3>
 
                                             <input type="text" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder={"Product Name"} value={createProductName} onChange={(e) => { setCreateProductName(e.target.value) }} />
@@ -280,7 +280,7 @@ const NewProduct = () => {
 
                                     <div className="max-w-sm mx-aut shadow-md overflow-hidden items-center border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-800  dark:border-gray-600 dark:hover:border-gray-500 ">
                                         <div className="px-4 py-4">
-                                            <h3 className="mt-4 mb-6 flex justify-center text-xl font-semibold dark:text-white">New Product</h3>
+                                            <h3 className="mt-4 mb-6 flex justify-center text-xl font-semibold dark:text-white text-black">Edit Product</h3>
 
                                             <input type="text" name="name" id="name" className="my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder={"Product Name"} value={editProductName} onChange={(e) => { setEditProductName(e.target.value) }} />

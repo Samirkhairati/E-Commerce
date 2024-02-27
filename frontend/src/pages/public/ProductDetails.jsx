@@ -22,28 +22,32 @@ const ProductDetails = () => {
                     </div>
                 </div>
                 :
-                <div className='w-full p-10 flex flex-col md:flex-row md:items-center justify-center'>
-                    <div className="h-80 w-full md:w-1/2 my-5 md:mr-10">
-                        <Carousel slide={false}>
-                            {product && product.image.map((image, index) => {
-                                return <img src={image} key={index} />
-                            })}
+                <div className="w-full p-10">
+                    <div className='p-10 shadow-lg dark:bg-gray-800 bg-gray-100 rounded-2xl flex flex-col md:flex-row md:items-center justify-center'>
+                        <div className="h-96 w-full md:w-1/2 my-5 md:mr-10">
+                            <Carousel slide={false}>
+                                {product && product.image.map((image, index) => {
+                                    return <img src={image} key={index} />
+                                })}
 
-                            <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" />
-                            <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" />
-                            <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" />
-                            <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" />
-                            <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" />
-                        </Carousel>
+                                <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" />
+                                <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" />
+                                <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" />
+                                <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" />
+                                <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" />
+                            </Carousel>
 
+                        </div>
+                        <div className='flex flex-col md:w-1/2  sm:mt-5 sm:w-full md:justify-center'>
+                            <p className='text-3xl dark:text-gray-500 text-gray-400 mb-3'>Category</p>
+                            <h1 className='text-5xl font-bold dark:text-white text-black mb-5'>Apple Watch Series 7</h1>
+                            <p className='text-4xl font-bold text-white mb-5'><span className='text-blue-400 mr-2'>₹1000</span><span className='text-2xl line-through text-gray-500'>₹1000</span></p>
+                            <p className='text-lg text-gray-400 mb-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ex veritatis id. Sapiente reprehenderit odit beatae? Accusamus sapiente provident architecto, possimus omnis velit nostrum ullam fuga dolorum nisi ipsam. Modi.</p>
+                            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add to Cart</button>
+                        </div>
                     </div>
-                    <div className='flex flex-col w-1/2 md:h-80 sm:mt-5 md:justify-center'>
-                        <h1 className='text-4xl font-bold text-white'>Product Name</h1>
-                        <p className='text-lg text-gray-300'>Category</p>
-                        <p className='text-2xl font-bold text-white'>₹ 1000</p>
-                        <p className='text-lg text-gray-300'>Description</p>
-                    </div>
-                </div>}
+                </div>
+            }
         </>
 
 
