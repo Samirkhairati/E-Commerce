@@ -7,15 +7,19 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 :root {
     --background-color-dark: rgb(16, 27, 42);
-    --text-color-light: dark;
-    --background-color-light: white; /* Change this to the appropriate dark mode color */
-    --text-color-light: black; /* Change this to the appropriate dark mode color */
+    --background-color-light: white;
 }
+
 body {
-    background-color: var(--background-color-dark);
+    background-color: var(--background-color-light);
     color: white;
+}
+
+.dark {
+    background-color: var(--background-color-dark);
 }
 
 .main-sizing {

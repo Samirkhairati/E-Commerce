@@ -4,16 +4,17 @@ import { HiHome, HiHeart, HiShoppingCart, HiOutlineAdjustments } from 'react-ico
 import { HiUser } from "react-icons/hi2";
 import { MdDashboard, MdCategory } from "react-icons/md";
 import { FaVolleyballBall, FaSyncAlt, FaNodeJs } from "react-icons/fa";
+import { MdOutlineWbSunny } from "react-icons/md";
 import { FaLock, FaUsers, FaListCheck } from "react-icons/fa6";
 import { HiShoppingBag } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../../actions/api/usersApiSlice";
 import { logout } from "../../actions/reducers/authSlice";
+import { toggleDarkMode } from "../../actions/reducers/darkSlice";
 import { toast } from "react-toastify";
 import SidebarLink from "../../components/SidebarLink";
 import TechStack from "../../components/TechStack";
 import { SiExpress, SiMongodb, SiReact, SiRedux, SiHtml5, SiCss3, SiJavascript } from "react-icons/si";
-import { TbBrandVite } from "react-icons/tb";
 
 const Navigation = () => {
     // React Hooks
@@ -26,6 +27,10 @@ const Navigation = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { userInfo } = useSelector((state) => state.auth);
+
+    // Dark Mode
+    const isDarkMode = useSelector((state) => state.dark.isDarkMode);
+
 
     const [logoutApiCall] = useLogoutMutation();
     const logoutHandler = async () => {
@@ -69,6 +74,14 @@ const Navigation = () => {
                                 <TechStack icon={SiRedux} color='purple' />
                                 <TechStack icon={TbBrandVite} color='pink' />
                             </div> */}
+                            <label className="inline-flex items-center cursor-pointer mr-3">
+                                <MdOutlineWbSunny className="text-gray-600 dark:text-gray-400 mr-2" />
+                                <input type="checkbox" value={isDarkMode} onClick={()=>{dispatch(toggleDarkMode())}} className="sr-only peer" />
+                                <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 flex items-center justify-center">
+
+                                </div>
+                            </label>
+
                             {!userInfo ?
                                 <Link to="/login"
                                     className="bg-blue-600 inline-flex items-center w-full px-3 py-2 text-sm font-normal rounded-md text-white hover:bg-blue-700 hover:border-gray-300">
@@ -98,15 +111,6 @@ const Navigation = () => {
                                             </p>
                                         </div>
                                         <ul className="py-1" role="none">
-                                            {/* <li>
-                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                                            </li> */}
                                             <li>
                                                 <button onClick={logoutHandler} className="w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</button>
                                             </li>

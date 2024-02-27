@@ -2,8 +2,21 @@ import { Outlet } from 'react-router-dom'
 import Navigation from './pages/auth/Navigation'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+
 
 function App() {
+  const isDarkMode = useSelector((state) => state.dark.isDarkMode);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark')
+    }
+    else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [isDarkMode])
 
   return (
     <>

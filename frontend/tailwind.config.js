@@ -11,4 +11,5 @@ export default {
   plugins: [
     import('flowbite/plugin')
   ],
+  darkMode: 'class',
 }
