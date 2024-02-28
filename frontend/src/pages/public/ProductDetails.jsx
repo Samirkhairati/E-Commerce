@@ -28,18 +28,6 @@ const ProductDetails = () => {
                 <div className="w-full p-10">
                     <div className='p-10 shadow-lg dark:bg-gray-800 bg-gray-100 rounded-2xl flex flex-col md:flex-row md:items-center justify-center'>
                         <div className="w-full md:w-1/2 my-5 md:mr-10">
-                            {/* <Carousel slide={false}>
-                                {product && product.image.map((image, index) => {
-                                    return <img src={image} key={index} />
-                                })}
-
-                                <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" />
-                                <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" />
-                                <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" />
-                                <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" />
-                                <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" />
-                            </Carousel> */}
-
 
                             <div className="grid gap-4">
                                 <div>
@@ -47,19 +35,19 @@ const ProductDetails = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-4">
                                     <div>
-                                        <img className="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
+                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
                                     </div>
                                     <div>
-                                        <img className="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
+                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
                                     </div>
                                     <div>
-                                        <img className="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
+                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
                                     </div>
                                     <div>
-                                        <img className="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
+                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
                                     </div>
                                     <div>
-                                        <img className="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
+                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
                                     </div>
                                     
                                 </div>

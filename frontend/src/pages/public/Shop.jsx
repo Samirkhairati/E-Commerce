@@ -34,7 +34,7 @@ const Shop = () => {
                     </div>
                 </div>
                 : isError ? <div>{toast.error(JSON.stringify(isError.data))}</div>
-                    : products.products.length > 0 ?
+                    : products.products.length > 0 || products.length > 0 ?
                         <>
                             <div className="pt-10 px-1">
                                 <SearchBar onSearch={searchHandler} />
