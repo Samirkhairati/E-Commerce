@@ -8,7 +8,15 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Shop = () => {
     const [currentPage, setCurrentPage] = useState(1)
-    const { data: products, refetch, isLoading, isError } = useGetProductsQuery({ keyword: {}, page: currentPage });
+    const [searchTerm, setSearchTerm] = useState('');
+    const { data: products, refetch, isLoading, isError } = useGetProductsQuery({ keyword: searchTerm, page: currentPage });
+
+    const searchHandler = (keyword) => {
+        setSearchTerm(keyword);
+        setCurrentPage(1)
+        refetch({ keyword, page: currentPage })
+    }
+
     useEffect(() => {
         refetch()
     }, [refetch])
@@ -26,41 +34,46 @@ const Shop = () => {
                     </div>
                 </div>
                 : isError ? <div>{toast.error(JSON.stringify(isError.data))}</div>
-                    :
-                    <>
-                        <div className="pt-10 px-1">
-                            <SearchBar />
-                            <section className="p-1 mt-3 w-full flex flex-wrap flex-row items-center justify-center">
-                                {products.products.map((product, index) => {
-                                    return <ProductCard key={index} productId={product._id} name={product.name} image={product.image} price={product.price} rating={product.rating} />
-                                })}
-                            </section>
-                            <nav className="w-full flex flex-row items-center justify-center mt-2 mb-5">
-                                <ul className="flex items-center -space-x-px h-10 text-base">
-                                    <li>
-                                        <button onClick={() => { 1 === products.page ? setCurrentPage(currentPage) : setCurrentPage(currentPage - 1) }} className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                            <IoIosArrowBack className="w-4 h-4  rtl:rotate-180" />
-                                        </button>
-                                    </li>
-                                    {Array.from({ length: products.pages }, (_, i) => (
-                                        <li key={i}>
-                                            <button onClick={() => { setCurrentPage(i + 1) }} className={`flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 ${products.page === i + 1 ? 'bg-gray-100 text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' : 'hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}`}>
-                                                {i + 1}
+                    : products.products.length > 0 ?
+                        <>
+                            <div className="pt-10 px-1">
+                                <SearchBar onSearch={searchHandler} />
+                                <section className="p-1 mt-3 w-full flex flex-wrap flex-row items-center justify-center">
+                                    {products.products.map((product, index) => {
+                                        return <ProductCard key={index} productId={product._id} name={product.name} image={product.image} price={product.price} rating={product.rating} />
+                                    })}
+                                </section>
+                                <nav className="w-full flex flex-row items-center justify-center mt-2 mb-5">
+                                    <ul className="flex items-center -space-x-px h-10 text-base">
+                                        <li>
+                                            <button onClick={() => { 1 === products.page ? setCurrentPage(currentPage) : setCurrentPage(currentPage - 1) }} className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                <IoIosArrowBack className="w-4 h-4  rtl:rotate-180" />
                                             </button>
                                         </li>
-                                    ))}
+                                        {Array.from({ length: products.pages }, (_, i) => (
+                                            <li key={i}>
+                                                <button onClick={() => { setCurrentPage(i + 1) }} className={`flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 ${products.page === i + 1 ? 'bg-gray-100 text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' : 'hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}`}>
+                                                    {i + 1}
+                                                </button>
+                                            </li>
+                                        ))
+                                        }
 
 
-                                    <li>
-                                        <button onClick={() => { products.pages === products.page ? setCurrentPage(currentPage) : setCurrentPage(currentPage + 1) }} className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                            <IoIosArrowForward className="w-4 h-4  rtl:rotate-180" />
-                                        </button>
-                                    </li>
-                                </ul>
-                            </nav>
+                                        <li>
+                                            <button onClick={() => { products.pages === products.page ? setCurrentPage(currentPage) : setCurrentPage(currentPage + 1) }} className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                <IoIosArrowForward className="w-4 h-4  rtl:rotate-180" />
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+
+                        </>
+                        :
+                        <div className="w-full p-20 flex justify-center items-center">
+                            <img className="w-[50%]" src="https://i.imgur.com/Nc10v1F.png" alt="" />
                         </div>
-
-                    </>
 
 
             }

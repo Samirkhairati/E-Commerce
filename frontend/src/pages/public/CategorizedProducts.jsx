@@ -9,10 +9,10 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 const Shop = () => {
     const { id } = useParams()
     const { data: products, refetch, isLoading, isError } = useReadCategoriesQuery(id);
-    
+
     useEffect(() => {
         refetch()
-        console.log(products || 'loding ' )
+        console.log(products || 'loding ')
     }, [refetch, products])
     return (
         <>
@@ -28,19 +28,26 @@ const Shop = () => {
                     </div>
                 </div>
                 : isError ? <div>{toast.error(JSON.stringify(isError.data))}</div>
-                    :
-                    <>
-                        <div className="pt-10 px-1">
-                            <SearchBar />
-                            <section className="p-1 mt-3 w-full flex flex-wrap flex-row items-center justify-center">
-                                {products.map((product, index) => {
-                                    return <ProductCard key={index} productId={product._id} name={product.name} image={product.image} price={product.price} rating={product.rating} />
-                                })}
-                            </section>
+                    : products.length > 0 ?
+                        <>
+                            <div className="pt-10 px-1">
+                                <SearchBar />
+                                <section className="p-1 mt-3 w-full flex flex-wrap flex-row items-center justify-center">
+                                    {products.map((product, index) => {
+                                        return <ProductCard key={index} productId={product._id} name={product.name} image={product.image} price={product.price} rating={product.rating} />
+                                    })}
+                                </section>
 
-                        </div>
+                            </div>
 
-                    </>
+                        </>
+                        :
+                        <>
+                            <div className="w-full p-20 flex justify-center items-center">
+                                <img className="w-[50%]" src="https://i.imgur.com/Nc10v1F.png" alt="" />
+                            </div>
+
+                        </>
 
 
             }
