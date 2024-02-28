@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { HiHome, HiHeart, HiShoppingCart, HiOutlineAdjustments } from 'react-icons/hi';
 import { HiUser } from "react-icons/hi2";
@@ -27,6 +27,9 @@ const Navigation = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { userInfo } = useSelector((state) => state.auth);
+    const [cartCount, setCartCount] = useState(0);
+    const { cartItems } = useSelector((state) => state.cart);
+    
 
     // Dark Mode
     const isDarkMode = useSelector((state) => state.dark.isDarkMode);
@@ -44,6 +47,10 @@ const Navigation = () => {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        setCartCount(cartItems.reduce((total, item) => total + item.quantity, 0))
+    }, [cartItems])
 
     return (
         <>
@@ -130,7 +137,7 @@ const Navigation = () => {
                     <ul className="space-y-2 font-medium">
                         <SidebarLink link='/' name='Home' icon={HiHome} ></SidebarLink>
                         <SidebarLink link="/shop" name="Shop" icon={HiShoppingBag} />
-                        <SidebarLink link="/cart" name="Cart" icon={HiShoppingCart} />
+                        <SidebarLink link="/me/cart" name={`Cart (${cartCount})`} icon={HiShoppingCart} />
                         <SidebarLink link="/categories" name="Categories" icon={MdDashboard} />
                         <SidebarLink link="/me/profile" name="Profile" icon={HiUser} />
                         <SidebarLink link="/admin/users" name="Users" icon={FaUsers} admin="yes" />

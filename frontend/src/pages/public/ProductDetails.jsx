@@ -1,16 +1,27 @@
 import { useParams } from 'react-router';
 import { useGetProductDetailsQuery } from '../../actions/api/productsApiSlice';
-import { useEffect , useState} from 'react';
+import { useEffect, useState } from 'react';
+import { set } from 'mongoose';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../actions/reducers/cartSlice';
+import { toast } from 'react-toastify';
 
 const ProductDetails = () => {
     const { id } = useParams();
     const { data: product, error, isLoading } = useGetProductDetailsQuery(id);
-
-    const [selectedImage, setSelectedImage] = useState("https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg");
+    const [defaultImage, setDefaultImage] = useState('');
+    const [selectedImage, setSelectedImage] = useState('');
+    const dispatch = useDispatch();
+    const addToCartButton = () => {
+        dispatch(addToCart(product._id))
+        toast.success('Product added to cart')
+    }
 
 
     useEffect(() => {
-        console.log(!isLoading ? product : 'Loading')
+        //console.log(!isLoading ? product : 'Loading')
+        setDefaultImage(!isLoading ? product.image[0] : '');
+        setSelectedImage(!isLoading ? product.image[0] : '')
     }, [product])
     return (
         <>
@@ -25,31 +36,33 @@ const ProductDetails = () => {
                     </div>
                 </div>
                 :
+                
                 <div className="w-full p-10">
                     <div className='p-10 shadow-lg dark:bg-gray-800 bg-gray-100 rounded-2xl flex flex-col md:flex-row md:items-center justify-center'>
                         <div className="w-full md:w-1/2 my-5 md:mr-10">
 
                             <div className="grid gap-4">
                                 <div>
-                                    <img className="h-auto max-w-full rounded-lg" src={selectedImage} alt=""/>
+                                    <img className="h-auto max-w-full rounded-lg" src={selectedImage} alt="" />
                                 </div>
                                 <div className="grid grid-cols-5 gap-4">
                                     <div>
-                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
+                                        <img className="h-auto cursor-pointer max-w-full rounded-lg" src={defaultImage} onClick={(e) => { setSelectedImage(e.target.src) }} />
                                     </div>
                                     <div>
-                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
+                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" onClick={(e) => { setSelectedImage(e.target.src) }} />
                                     </div>
                                     <div>
-                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
+                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" onClick={(e) => { setSelectedImage(e.target.src) }} />
                                     </div>
                                     <div>
-                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
+                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" onClick={(e) => { setSelectedImage(e.target.src) }} />
                                     </div>
                                     <div>
-                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" onClick={(e) => {setSelectedImage(e.target.src)}} />
+                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" onClick={(e) => { setSelectedImage(e.target.src) }} />
                                     </div>
-                                    
+
+
                                 </div>
                             </div>
 
@@ -57,11 +70,16 @@ const ProductDetails = () => {
 
                         </div>
                         <div className='flex flex-col md:w-1/2  sm:mt-5 sm:w-full md:justify-center'>
-                            <p className='text-3xl dark:text-gray-500 text-gray-400 mb-4'>Category</p>
-                            <h1 className='text-5xl font-bold dark:text-white text-black mb-8'>Apple Watch Series 7</h1>
-                            <p className='text-4xl font-bold text-white mb-8'><span className='text-blue-400 mr-2'>₹1000</span><span className='text-3xl line-through text-gray-500'>₹1000</span></p>
-                            <p className='text-lg text-gray-400 mb-10'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ex veritatis id. Sapiente reprehenderit odit beatae? Accusamus sapiente provident architecto, possimus omnis velit nostrum ullam fuga dolorum nisi ipsam. Modi.</p>
-                            <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add to Cart</button>
+                            <h1 className='text-3xl font-bold dark:text-gray-500 text-black mb-5'>{product.name}</h1>
+                            <h1 className='text-5xl font-bold dark:text-white text-black mb-8'>{product.name}</h1>
+                            <p className='text-4xl font-bold text-white mb-8'><span className='text-blue-400 mr-2'>₹{Math.round(product.price * (1 - product.discount / 100))}</span><span className='text-3xl line-through text-gray-500'>₹{product.price}</span></p>
+                            <p className='text-lg text-gray-400 mb-10'>{product.description}</p>
+                            <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                onClick={addToCartButton}
+                            >
+                                Add to Cart
+                                {/* <input type='number' value={quantity} onChange={(e) => { setQuantity(e.target.value) }} className='w-14 ml-6 text-gray-500 p-1 pl-3 rounded-md bg-slate-700'></input> */}
+                            </button>
                         </div>
                     </div>
                 </div>

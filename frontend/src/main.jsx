@@ -26,12 +26,14 @@ import CategorizedProducts from './pages/public/CategorizedProducts.jsx';
 // PRIVATE
 import PrivateRoute from './pages/private/PrivateRoute.jsx';
 import Profile from './pages/private/Profile.jsx';
+import Cart from './pages/private/Cart.jsx';
 
 // ADMIN
 import AdminRoute from './pages/admin/AdminRoute.jsx';
 import UserList from './pages/admin/UserList.jsx';
 import CategoryList from './pages/admin/CategoryList.jsx';
 import ProductList from './pages/admin/ProductList.jsx';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,8 +48,8 @@ const router = createBrowserRouter(
 
       <Route path="me" element={<PrivateRoute />}>
         <Route path="profile" element={<Profile />} />
-        {/* <Route path="/shipping" element={<Shipping />} />
-        <Route path="/placeorder" element={<PlaceOrder />} />
+        <Route path="cart" element={<Cart />} />
+        {/* <Route path="/placeorder" element={<PlaceOrder />} />
         <Route path="/order/:id" element={<Order />} /> */}
       </Route>
 
