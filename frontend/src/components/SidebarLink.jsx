@@ -12,7 +12,7 @@ const SidebarLink = (props) => {
                         {props.name}</span>
                     {props.admin === 'yes'
                         &&
-                        <FaLock className="w-5 h-5 absolute right-2 p-[4px] text-blue-500 bg-blue-900 border-rad rounded-md" />}
+                        <FaLock className="w-5 h-5 absolute right-2 p-[4px] text-blue-500 bg-blue-300 dark:bg-blue-900 border-rad rounded-md" />}
                 </Link>
             </li>
         </>

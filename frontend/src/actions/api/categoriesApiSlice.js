@@ -34,6 +34,11 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Category"],
       keepUnusedDataFor: 5,
     }),
+    readCategories: builder.query({
+      query: (categoryId) => `${CATEGORY_URL}/${categoryId}`,
+      providesTags: ["Category"],
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -42,4 +47,5 @@ export const {
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
   useGetCategoriesQuery,
+  useReadCategoriesQuery
 } = categoryApiSlice;

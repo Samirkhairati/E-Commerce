@@ -21,6 +21,7 @@ import Categories from './pages/public/Categories.jsx'
 import Shop from './pages/public/Shop.jsx';
 import ProductDetails from './pages/public/ProductDetails.jsx';
 import Home from './pages/public/Home.jsx';
+import CategorizedProducts from './pages/public/CategorizedProducts.jsx';
 
 // PRIVATE
 import PrivateRoute from './pages/private/PrivateRoute.jsx';
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
       <Route path="/register" element={<SignUp />} />
       <Route index={true} path="/" element={<Home />} />
       <Route path="/product/:id" element={<ProductDetails />} />
+      <Route path="/categories/:id" element={<CategorizedProducts />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/categories" element={<Categories />} />
 

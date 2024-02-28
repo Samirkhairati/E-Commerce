@@ -7,7 +7,7 @@ const CategoryCard = (props) => {
   const defaultImage = "https://i.imgur.com/OhBk4XC.png"
   return (
     <>
-      <Link to="/categories" className="flex overflow-hidden items-center m-5 w-4/5 lg:w-[45%] h-44 rounded-3xl relative">
+      <Link to={"/categories/"+props.categoryId} className="flex overflow-hidden items-center m-5 w-4/5 lg:w-[45%] h-44 rounded-3xl relative">
         <img src={`${props.image || defaultImage}`} alt="" className="h-full absolute object-cover object-right w-full obje right-0" />
         <h2 className="text-3xl font-bold text-white drop-shadow-sm left-10 absolute ">{props.name || 'Furniture'}</h2>
       </Link>
@@ -42,7 +42,7 @@ const Categories = () => {
             <section className="p-10 flex flex-row  flex-wrap w-full justify-center items-center">
               {categories.map((category, index) => {
                 return (
-                  <CategoryCard key={index} name={category.name} image={category.image} />
+                  <CategoryCard key={index} categoryId={category._id} name={category.name} image={category.image} />
                 )
               })}
             </section>

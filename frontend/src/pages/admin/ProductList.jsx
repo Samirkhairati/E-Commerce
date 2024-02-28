@@ -236,9 +236,9 @@ const NewProduct = () => {
                                             <select name="name" id="name" className="pr-3 my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder={"Category"} value={createProductCategory} onChange={(e) => { setCreateProductCategory(e.target.value) }} >
 
-                                                {categories && categories.map((category) => {
+                                                {categories && categories.map((category, index) => {
                                                     return (
-                                                        <option value={category._id}>{category.name}</option>
+                                                        <option value={category._id} key={index}>{category.name}</option>
                                                     );
                                                 })}
 
@@ -296,9 +296,9 @@ const NewProduct = () => {
                                             <select name="name" id="name" className="pr-3 my-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder={"Category"} value={editProductCategory} onChange={(e) => { setEditProductCategory(e.target.value) }} >
 
-                                                {categories && categories.map((category) => {
+                                                {categories && categories.map((category, index) => {
                                                     return (
-                                                        <option value={category._id}>{category.name}</option>
+                                                        <option value={category._id} key={index}>{category.name}</option>
                                                     );
                                                 })}
 

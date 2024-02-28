@@ -5,15 +5,13 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { current } from "@reduxjs/toolkit";
 
 const Shop = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const { data: products, refetch, isLoading, isError } = useGetProductsQuery({ keyword: {}, page: currentPage });
     useEffect(() => {
         refetch()
-        console.log(isLoading ? '' : products.pages)
-    }, [refetch, products])
+    }, [refetch])
     return (
         <>
 
@@ -34,7 +32,7 @@ const Shop = () => {
                             <SearchBar />
                             <section className="p-1 mt-3 w-full flex flex-wrap flex-row items-center justify-center">
                                 {products.products.map((product, index) => {
-                                    return <ProductCard key={index} name={product.name} image={product.image} price={product.price} rating={product.rating} />
+                                    return <ProductCard key={index} productId={product._id} name={product.name} image={product.image} price={product.price} rating={product.rating} />
                                 })}
                             </section>
                             <nav className="w-full flex flex-row items-center justify-center mt-2 mb-5">

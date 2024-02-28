@@ -1,6 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Product from "../models/productModel.js";
-
+import mongoose from "mongoose";
 const addProduct = asyncHandler(async (req, res) => {
   let { name, description, price, discount, image, category, count, sold } = req.body;
 
@@ -103,6 +103,17 @@ const fetchAllProducts = asyncHandler(async (req, res) => {
   res.json(products);
 }, '@fetchAllProducts ERROR: definition: ');
 
+const fetchProductsByCategoryId = asyncHandler(async (req, res) => {
+  const categoryId = req.params.categoryId;
+  console.log('called: ', categoryId)
+  const products = await Product.find({}).populate("category")
+  const filteredProducts = products.filter(product => {
+    return product.category._id.toString() === categoryId;
+  });
+  res.json(filteredProducts);
+}, '@fetchProductsByCategoryId ERROR: definition: ');
+
+
 export {
   addProduct,
   updateProductDetails,
@@ -110,4 +121,5 @@ export {
   searchProducts,
   fetchProductById,
   fetchAllProducts,
+  fetchProductsByCategoryId
 };
