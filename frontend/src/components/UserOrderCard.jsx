@@ -1,7 +1,7 @@
 import { useMarkProductAsDeliveredMutation } from "../actions/api/ordersApiSlice";
 import { toast } from "react-toastify";
 
-const OrderCard = (props) => {
+const UserOrderCard = (props) => {
     const [markProductAsDelivered] = useMarkProductAsDeliveredMutation();
 
     const markDeliveredButton = () => {
@@ -32,6 +32,14 @@ const OrderCard = (props) => {
                             </tr>
                         </thead>
                         <tbody>
+                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Status
+                                </th>
+                                <td className={`px-6 py-4 ${props.order.status === 'Pending' ? 'text-rose-400' : 'text-emerald-400'} `}>
+                                    {props.order.status}
+                                </td>
+                            </tr>
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     Address
@@ -105,11 +113,9 @@ const OrderCard = (props) => {
                     </table>
                 </div>
 
-                <button onClick={markDeliveredButton} type="button" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Mark as Delivered</button>
-
             </div>
         </>
     );
 };
 
-export default OrderCard;
+export default UserOrderCard;

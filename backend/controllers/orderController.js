@@ -35,18 +35,14 @@ const createOrder = asyncHandler(async (req, res) => {
 }, '@createOrder ERROR: definition');
 
 const getAllOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ status: "Pending" }).populate("user").populate("orderItems.product");;
+  const orders = await Order.find({ status: "Pending" }).populate("user").populate("orderItems.product");
   res.json(orders);
 }, '@getAllOrders ERROR: definition');
 
-const getUserOrders = async (req, res) => {
-  try {
-    const orders = await Order.find({ user: req.user._id });
-    res.json(orders);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+const getUserOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id }).populate("user").populate("orderItems.product").sort({ createdAt: -1 });
+  res.json(orders);
+}, '@getUserOrders ERROR: definition');
 
 const markOrderAsDelivered = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);

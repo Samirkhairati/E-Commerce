@@ -16,14 +16,16 @@ export const productApiSlice = apiSlice.injectEndpoints({
     getAllOrders: builder.query({
       query: () => `${ORDER_URL}`,
       providesTags: ["Products"],
+      keepUnusedDataFor: 5,
     }),
 
-    // getProductDetails: builder.query({
-    //   query: (productId) => ({
-    //     url: `${PRODUCT_URL}/${productId}`,
-    //   }),
-    //   keepUnusedDataFor: 5,
-    // }),
+    getUserOrders: builder.query({
+      query: () => ({
+        url: `${ORDER_URL}/mine`,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Products"],
+    }),
 
     createOrder: builder.mutation({
       query: (data) => ({
@@ -57,4 +59,5 @@ export const {
   useCreateOrderMutation,
   useGetAllOrdersQuery,
   useMarkProductAsDeliveredMutation,
+  useGetUserOrdersQuery
 } = productApiSlice;
