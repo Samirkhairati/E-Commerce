@@ -1,7 +1,6 @@
 import { useParams } from 'react-router';
 import { useGetProductDetailsQuery } from '../../actions/api/productsApiSlice';
 import { useEffect, useState } from 'react';
-import { set } from 'mongoose';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../actions/reducers/cartSlice';
 import { toast } from 'react-toastify';
@@ -13,7 +12,10 @@ const ProductDetails = () => {
     const [selectedImage, setSelectedImage] = useState('');
     const dispatch = useDispatch();
     const addToCartButton = () => {
-        dispatch(addToCart(product._id))
+        dispatch(addToCart({
+            productId: product.productId,
+            product: product
+        }))
         toast.success('Product added to cart')
     }
 

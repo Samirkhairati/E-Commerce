@@ -2,19 +2,23 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart } from "../actions/reducers/cartSlice";
+import { useGetProductDetailsQuery } from "../actions/api/productsApiSlice";
 
 const ProductCard = (props) => {
-
+    const { data: product, isLoading } = useGetProductDetailsQuery(props.productId);
     const appleWatch = "https://flowbite.com/docs/images/products/apple-watch.png"
     const dispatch = useDispatch();
     const addToCartButton = () => {
-        dispatch(addToCart(props.productId))
+        dispatch(addToCart({
+            productId: props.productId,
+            product: !isLoading && product
+        }))
         toast.success('Product added to cart')
     }
     return (
         <div>
             <div className="m-1 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <Link to={'/product/'+props.productId}>
+                <Link to={'/product/' + props.productId}>
                     <img className="p-8 rounded-t-lg w-[384px] h-[283.5px] object-contain" src={props.image || appleWatch} alt="product image" />
                 </Link>
                 <div className="px-5 pb-5">
