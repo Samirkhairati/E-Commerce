@@ -3,6 +3,7 @@ import { BASE_URL } from '../routes'
 const baseQuery = fetchBaseQuery(
     {
         baseUrl: BASE_URL,
+        // code for trying cross domain cookies 
         // credentials: 'include',
         // prepareHeaders: (headers) => {
         //     headers.set('Content-Type', 'application/json');
