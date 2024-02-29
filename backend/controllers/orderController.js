@@ -34,14 +34,10 @@ const createOrder = asyncHandler(async (req, res) => {
   res.status(201).json(createdOrder);
 }, '@createOrder ERROR: definition');
 
-const getAllOrders = async (req, res) => {
-  try {
-    const orders = await Order.find({}).populate("user", "id username");
-    res.json(orders);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+const getAllOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ status: "Pending" }).populate("user").populate("orderItems.product");;
+  res.json(orders);
+}, '@getAllOrders ERROR: definition');
 
 const getUserOrders = async (req, res) => {
   try {
@@ -52,24 +48,19 @@ const getUserOrders = async (req, res) => {
   }
 };
 
-const markOrderAsDelivered = async (req, res) => {
-  try {
-    const order = await Order.findById(req.params.id);
+const markOrderAsDelivered = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
 
-    if (order) {
-      order.isDelivered = true;
-      order.deliveredAt = Date.now();
-
-      const updatedOrder = await order.save();
-      res.json(updatedOrder);
-    } else {
-      res.status(404);
-      throw new Error("Order not found");
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  if (order) {
+    order.status = "Delivered";
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
   }
-};
+
+}, '@markOrderAsDelivered ERROR: definition');
 
 export {
   createOrder,

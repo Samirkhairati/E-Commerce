@@ -13,9 +13,10 @@ export const productApiSlice = apiSlice.injectEndpoints({
     //   providesTags: ["Products"],
     // }),
 
-    // getAllProducts: builder.query({
-    //   query: () => `${PRODUCT_URL}/all`,
-    // }),
+    getAllOrders: builder.query({
+      query: () => `${ORDER_URL}`,
+      providesTags: ["Products"],
+    }),
 
     // getProductDetails: builder.query({
     //   query: (productId) => ({
@@ -33,13 +34,14 @@ export const productApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Order"],
     }),
 
-    // updateProduct: builder.mutation({
-    //   query: (data) => ({
-    //     url: `${PRODUCT_URL}/${data.productId}`,
-    //     method: "PUT",
-    //     body: data,
-    //   }),
-    // }),
+    markProductAsDelivered: builder.mutation({
+      query: (data) => ({
+        url: `${ORDER_URL}/${data._id}`,
+        method: "PUT",
+        body: data,
+      }), 
+      invalidatesTags: ["Product"],
+    }),
 
     // deleteProduct: builder.mutation({
     //   query: (productId) => ({
@@ -53,4 +55,6 @@ export const productApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useCreateOrderMutation,
+  useGetAllOrdersQuery,
+  useMarkProductAsDeliveredMutation,
 } = productApiSlice;

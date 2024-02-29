@@ -1,11 +1,13 @@
 import React from 'react';
 
 const UserOrders = () => {
-  return (
-    <div>
-      {/* Your code here */}
-    </div>
-  );
+    return (
+        <>
+            <div className="w-full bg-gray-800 p-4">
+
+            </div>
+        </>
+    );
 };
 
 export default UserOrders;

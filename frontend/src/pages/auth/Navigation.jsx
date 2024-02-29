@@ -140,10 +140,11 @@ const Navigation = () => {
                         <SidebarLink link="/me/cart" name={`Cart (${cartCount})`} icon={HiShoppingCart} />
                         <SidebarLink link="/categories" name="Categories" icon={MdDashboard} />
                         <SidebarLink link="/me/profile" name="Profile" icon={HiUser} />
+                        <SidebarLink link="/me/orders" name="Orders" icon={FaListCheck} />
                         <SidebarLink link="/admin/users" name="Users" icon={FaUsers} admin="yes" />
                         <SidebarLink link="/admin/category" name="+ Category" icon={MdDashboard} admin="yes" />
                         <SidebarLink link="/admin/products" name="+ Product" icon={MdCategory} admin="yes" />
-                        <SidebarLink link="/" name="Orders" icon={FaListCheck} admin="yes" />
+                        <SidebarLink link="/admin/orders" name="+ Orders" icon={FaListCheck} admin="yes" />
                         <li>
                             <div className=" flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-blue-500 dark:bg-blue-600 group">
                                 <FaLock className="w-5 h-5 relative p-[4px] text-blue-300 bg-blue-700 dark:bg-blue-900 border-rad rounded-md" />

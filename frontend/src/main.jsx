@@ -27,15 +27,18 @@ import CategorizedProducts from './pages/public/CategorizedProducts.jsx';
 import PrivateRoute from './pages/private/PrivateRoute.jsx';
 import Profile from './pages/private/Profile.jsx';
 import Cart from './pages/private/Cart.jsx';
+import UserOrders from './pages/private/UserOrders.jsx';
 
 // ADMIN
 import AdminRoute from './pages/admin/AdminRoute.jsx';
 import UserList from './pages/admin/UserList.jsx';
 import CategoryList from './pages/admin/CategoryList.jsx';
 import ProductList from './pages/admin/ProductList.jsx';
+import OrderList from './pages/admin/OrderList.jsx'
 
 
 const router = createBrowserRouter(
+
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/login" element={<SignIn />} />
@@ -49,22 +52,21 @@ const router = createBrowserRouter(
       <Route path="me" element={<PrivateRoute />}>
         <Route path="profile" element={<Profile />} />
         <Route path="cart" element={<Cart />} />
-        {/* <Route path="/placeorder" element={<PlaceOrder />} />
-        <Route path="/order/:id" element={<Order />} /> */}
+        <Route path="orders" element={<UserOrders />} />
       </Route>
 
       <Route path="admin" element={<AdminRoute />}>
         <Route path="users" element={<UserList />} />
         <Route path="category" element={<CategoryList />} />
         <Route path="products" element={<ProductList />} />
-        {/* <Route path="orderlist" element={<OrderList />} /> */}
+        <Route path="orders" element={<OrderList />} />
       </Route>
-    </Route>  
-    
+    </Route>
+
   )
 )
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-      <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </Provider>
 );

@@ -15,6 +15,6 @@ router.route("/")
   .get(userAuth, adminAuth, getAllOrders);
 
 router.route("/mine").get(userAuth, getUserOrders);
-router.route("/:id/delivered").put(userAuth, markOrderAsDelivered);
+router.route("/:id").put(userAuth, markOrderAsDelivered);
 
 export default router;
