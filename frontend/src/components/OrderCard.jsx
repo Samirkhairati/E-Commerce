@@ -5,9 +5,7 @@ const OrderCard = (props) => {
     const [markProductAsDelivered] = useMarkProductAsDeliveredMutation();
 
     const markDeliveredButton = () => {
-        toast.success("Order marked as delivered");
         try {
-            toast.success("Order marked as delivered");
             markProductAsDelivered({ _id: props.order._id });
             toast.success("Order marked as delivered");
         } catch (error) {
