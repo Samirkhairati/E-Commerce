@@ -104,7 +104,7 @@ const NewProduct = () => {
     const [editProductCategory, setEditProductCategory] = useState('');
     const [editSelectedFile, setEditSelectedFile] = useState(null);
     const [editPreviewURL, setEditPreviewURL] = useState(null);
-    const [editImageURL, setEditImageURL] = useState('https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png');
+    const [editImageURL, setEditImageURL] = useState('');
     const [editProduct, { isLoading: editProductIsLoading }] = useUpdateProductMutation();
 
     function resetEditProduct() {
@@ -116,7 +116,7 @@ const NewProduct = () => {
         setEditProductCategory('');
         setEditSelectedFile(null);
         setEditPreviewURL(null);
-        setEditImageURL('https://res.cloudinary.com/dkytadhg9/image/upload/v1708770896/uafdn2h4erwsqjjdruyp.png');
+        setEditImageURL('');
     }
 
     const handleEditButtonClick = (productId) => {

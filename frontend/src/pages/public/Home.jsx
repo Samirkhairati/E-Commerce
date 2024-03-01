@@ -6,12 +6,10 @@ const Home = () => {
         <>
             <div className="w-full p-4">
                 <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
-                    <Carousel slideInterval={2000}>
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" alt="..." />
-                        <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
+                    <Carousel slideInterval={1000}>
+                        <img src="https://i.imgur.com/kncSfNk.jpeg" alt="..." />
+                        <img src="https://i.imgur.com/CwCalnj.jpeg" alt="..." />
+                        <img src="https://i.imgur.com/V7m5J9T.jpeg" alt="..." />
                     </Carousel>
                 </div>
                 <div className="flex items-center justify-center py-4 md:py-8 flex-wrap">
@@ -21,7 +19,7 @@ const Home = () => {
                     <Link to='/shop' type="button" className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800">New</Link>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <Link to='/shop' className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="grid gap-4">
                         <div>
                             <img className="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image.jpg" alt="" />
@@ -66,7 +64,7 @@ const Home = () => {
                             <img className="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-11.jpg" alt="" />
                         </div>
                     </div>
-                </div>
+                </Link>
             </div>
         </>
     );

@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../actions/reducers/cartSlice';
 import { toast } from 'react-toastify';
+import { useReadCategoriesQuery } from '../../actions/api/categoriesApiSlice';
 
 const ProductDetails = () => {
     const { id } = useParams();
     const { data: product, error, isLoading } = useGetProductDetailsQuery(id);
+    const {data: category, categoryIsLoading} = useReadCategoriesQuery(!isLoading ? product.category : '');
     const [defaultImage, setDefaultImage] = useState('');
     const [selectedImage, setSelectedImage] = useState('');
     const dispatch = useDispatch();
@@ -22,9 +24,10 @@ const ProductDetails = () => {
 
     useEffect(() => {
         //console.log(!isLoading ? product : 'Loading')
+        console.log(!categoryIsLoading ? category : 'Loading')
         setDefaultImage(!isLoading ? product.image[0] : '');
         setSelectedImage(!isLoading ? product.image[0] : '')
-    }, [product])
+    }, [product, category])
     return (
         <>
             {isLoading ?
@@ -72,10 +75,10 @@ const ProductDetails = () => {
 
                         </div>
                         <div className='flex flex-col md:w-1/2  sm:mt-5 sm:w-full md:justify-center'>
-                            <h1 className='text-3xl font-bold dark:text-gray-500 text-black mb-5'>{product.name}</h1>
-                            <h1 className='text-5xl font-bold dark:text-white text-black mb-8'>{product.name}</h1>
-                            <p className='text-4xl font-bold text-white mb-8'><span className='text-blue-400 mr-2'>₹{Math.round(product.price * (1 - product.discount / 100))}</span><span className='text-3xl line-through text-gray-500'>₹{product.price}</span></p>
-                            <p className='text-lg text-gray-400 mb-10'>{product.description}</p>
+                            <h1 className='text-3xl font-bold dark:text-gray-500 text-black mb-2'>Product</h1>
+                            <h1 className='text-5xl font-bold dark:text-white text-black mb-6'>{product.name}</h1>
+                            <p className='text-4xl font-bold text-white mb-5'><span className='text-blue-400 mr-2'>₹{Math.round(product.price * (1 - product.discount / 100))}</span><span className='text-3xl line-through text-gray-500'>₹{product.price}</span></p>
+                            <p className='text-lg text-gray-400 mb-5'>{product.description} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet voluptatum excepturi assumenda ducimus! Dicta cum tenetur nostrum corporis minima vel amet esse aspernatur? Suscipit sint corrupti quasi aliquam unde commodi.</p>
                             <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                                 onClick={addToCartButton}
                             >
