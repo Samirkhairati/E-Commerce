@@ -93,7 +93,7 @@ const UserOrderCard = (props) => {
                                         <td className="px-6 py-4">
                                             ₹{Math.round(props.order.orderItems[index].product.price * props.order.orderItems[index].qty * (1 - props.order.orderItems[index].product.discount / 100))}
                                         </td>
-                                    </tr> : <div className="w-full pt-10 text-red-500">Product has been deleted</div>}
+                                    </tr> : <tr className="w-full pt-10 text-red-500">Product has been deleted</tr>}
                                 </>
                                 )
                             })}

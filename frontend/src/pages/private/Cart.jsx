@@ -111,7 +111,7 @@ useEffect(() => {
                             <p>Subtotal</p>
                             <p>₹{Math.round(itemsPrice) || 0}</p>
                         </div>
-                        <input value={address} onChange={(e) => {setAddress(e.target.value)}} type="text" class="mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your address" />
+                        <input value={address} onChange={(e) => {setAddress(e.target.value)}} type="text" className="mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your address" />
                         <div className="mt-6">
                             <button onClick={checkout} className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700">Place Order</button>
                         </div>
