@@ -52,7 +52,7 @@ const ProductDetails = () => {
                                 </div>
                                 <div className="grid grid-cols-5 gap-4">
                                     <div>
-                                        <img className="h-auto cursor-pointer max-w-full rounded-lg" src={defaultImage} onClick={(e) => { setSelectedImage(e.target.src) }} />
+                                        <img className="cursor-pointer h-auto max-w-full rounded-lg" src={defaultImage} onClick={(e) => { setSelectedImage(e.target.src) }} />
                                     </div>
                                     <div>
                                         <img className="cursor-pointer h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" onClick={(e) => { setSelectedImage(e.target.src) }} />
