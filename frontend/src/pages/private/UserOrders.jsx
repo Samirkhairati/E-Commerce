@@ -15,7 +15,7 @@ const UserOrders = () => {
     <>
       <div className='w-full p-8 flex flex-col space-y-10'>
         { isLoading ?`Loading...` : error ? `Error: ${error.message}` :
-         orders.map((order, index) => {
+         orders && orders.map((order, index) => {
             return <UserOrderCard key={index} order={order} />
          })      
          }

@@ -95,8 +95,8 @@ const UserOrderCard = (props) => {
                         <tbody>
 
                             {props.order.orderItems.map((item, index) => {
-                                return (
-                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={index}>
+                                return (<>
+                                    { props.order.orderItems[index].product ? <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={index}>
                                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {props.order.orderItems[index].product.name}
                                         </th>
@@ -106,7 +106,8 @@ const UserOrderCard = (props) => {
                                         <td className="px-6 py-4">
                                             ₹{Math.round(props.order.orderItems[index].product.price * props.order.orderItems[index].qty * (1 - props.order.orderItems[index].product.discount / 100))}
                                         </td>
-                                    </tr>
+                                    </tr> : <div className="w-full pt-10 text-red-500">Product has been deleted</div>}
+                                </>
                                 )
                             })}
                         </tbody>
