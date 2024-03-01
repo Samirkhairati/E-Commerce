@@ -52,6 +52,13 @@ const Cart = () => {
         
     }
 
+useEffect(() => {
+    if (cartItems.length > 0) {
+        console.log(cartItems[0]);
+    }
+}, [cartItems]);
+    
+
     return (
         <>
             <div className="w-full py-10 px-10">

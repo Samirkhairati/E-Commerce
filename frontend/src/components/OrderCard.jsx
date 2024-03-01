@@ -8,7 +8,7 @@ const OrderCard = (props) => {
     const markDeliveredButton = () => {
         try {
             markProductAsDelivered({ _id: props.order._id });
-            toast.success("Order marked as delivered, refresh the page to see changes.");
+            toast.success("Order marked as delivered.");
         } catch (error) {
             toast.error("Error marking order as delivered");
         }
