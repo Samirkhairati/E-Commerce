@@ -83,7 +83,7 @@ useEffect(() => {
                                                     <div>
                                                         <div className="flex justify-between text-base font-medium text-gray-900 dark:text-white">
                                                             <h3>
-                                                                <Link to={`/product/${item._id.toString()}`}>{item.product.name}</Link>
+                                                                <Link to={`/product/${item._id}`}>{item.product.name}</Link>
                                                             </h3>
                                                             <p className="ml-4">₹{Math.round(item.product.price * (1 - item.product.discount/100))}</p>
                                                         </div>
