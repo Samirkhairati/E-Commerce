@@ -40,7 +40,7 @@ const Shop = () => {
                                 <SearchBar onSearch={searchHandler} />
                                 <section className="p-1 mt-3 w-full flex flex-wrap flex-row items-center justify-center">
                                     {products.products.map((product, index) => {
-                                        return <ProductCard key={index} productId={product._id} name={product.name} image={product.image} price={product.price} rating={product.rating} />
+                                        return <ProductCard key={index} productId={product._id} name={product.name} image={product.image} price={product.price} rating={product.rating} discount={product.discount} />
                                     })}
                                 </section>
                                 <nav className="w-full flex flex-row items-center justify-center mt-2 mb-5">
